@@ -31,9 +31,10 @@
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
+ 
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  html { -webkit-text-size-adjust: 100%; }
+ 
   html, body {
     height: 100%; width: 100%;
     background: var(--bg);
@@ -42,19 +43,19 @@
     overflow: hidden;
     user-select: none;
   }
-
+ 
   .app {
     display: flex;
     flex-direction: column;
     height: 100dvh;
-    max-width: 430px;
+    max-width: 440px;
     margin: 0 auto;
     position: relative;
   }
-
+ 
   /* ── HEADER ── */
   .header {
-    padding: calc(var(--safe-top) + 12px) 20px 12px;
+    padding: calc(var(--safe-top) + 14px) 20px 14px;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
     display: flex;
@@ -63,16 +64,16 @@
     flex-shrink: 0;
   }
   .header-icon {
-    width: 32px; height: 32px;
+    width: 36px; height: 36px;
     background: linear-gradient(135deg, #1A3A6B, #0A1E40);
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     border: 1px solid rgba(0,212,255,0.3);
   }
-  .header-icon svg { width: 18px; height: 18px; }
+  .header-icon svg { width: 20px; height: 20px; }
   .header-title {
     font-family: var(--mono);
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 800;
     color: var(--cyan);
     letter-spacing: -0.5px;
@@ -85,17 +86,17 @@
     text-transform: uppercase;
     margin-left: auto;
   }
-
+ 
   /* ── CONTENT ── */
   .content {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    padding: 16px 16px calc(16px + var(--safe-bottom));
+    padding: 18px 18px calc(18px + var(--safe-bottom));
   }
   .content::-webkit-scrollbar { display: none; }
-
+ 
   /* ── TAB BAR ── */
   .tabbar {
     display: flex;
@@ -110,12 +111,12 @@
     flex-direction: column;
     align-items: center;
     gap: 3px;
-    padding: 10px 4px 6px;
+    padding: 12px 4px 8px;
     background: none;
     border: none;
     color: var(--text3);
     font-family: var(--mono);
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -124,7 +125,7 @@
     position: relative;
   }
   .tab.active { color: var(--cyan); }
-  .tab svg { width: 22px; height: 22px; stroke-width: 1.8; }
+  .tab svg { width: 24px; height: 24px; stroke-width: 1.8; }
   .tab-dot {
     position: absolute;
     top: 6px; right: calc(50% - 18px);
@@ -134,18 +135,18 @@
     display: none;
   }
   .tab-dot.show { display: block; }
-
+ 
   /* ── VIEWS ── */
   .view { display: none; }
   .view.active { display: block; }
-
+ 
   /* ── CARDS ── */
   .card {
     background: var(--bg2);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 12px;
+    padding: 18px;
+    margin-bottom: 14px;
   }
   .card-title {
     font-family: var(--mono);
@@ -156,7 +157,7 @@
     color: var(--text3);
     margin-bottom: 12px;
   }
-
+ 
   /* ── PHASE BADGE ── */
   .phase-badge {
     display: inline-flex;
@@ -174,11 +175,11 @@
   .phase-badge.atStore { background: rgba(255,122,0,0.15); color: var(--orange); border: 1px solid rgba(255,122,0,0.3); }
   .phase-badge.delivering { background: rgba(41,121,255,0.15); color: var(--blue); border: 1px solid rgba(41,121,255,0.3); }
   .phase-badge.complete { background: rgba(0,230,118,0.15); color: var(--green); border: 1px solid rgba(0,230,118,0.3); }
-
+ 
   /* ── TIMER ── */
   .timer {
     font-family: var(--mono);
-    font-size: 48px;
+    font-size: 56px;
     font-weight: 800;
     color: var(--cyan);
     letter-spacing: -2px;
@@ -192,7 +193,7 @@
     text-transform: uppercase;
     margin-top: 4px;
   }
-
+ 
   /* ── PHASE STEPS ── */
   .phase-steps {
     display: flex;
@@ -209,7 +210,7 @@
     position: relative;
   }
   .phase-step-icon {
-    width: 36px; height: 36px;
+    width: 42px; height: 42px;
     border-radius: 50%;
     background: var(--bg3);
     border: 2px solid var(--bg4);
@@ -218,7 +219,7 @@
     position: relative;
     z-index: 1;
   }
-  .phase-step-icon svg { width: 16px; height: 16px; }
+  .phase-step-icon svg { width: 18px; height: 18px; }
   .phase-step-icon.done { background: var(--green); border-color: var(--green); }
   .phase-step-icon.done svg { color: #000; }
   .phase-step-icon.active { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 12px rgba(0,212,255,0.4); }
@@ -242,12 +243,12 @@
     transition: background 0.3s;
   }
   .phase-connector.done { background: var(--green); }
-
+ 
   /* ── BUTTONS ── */
   .btn {
     width: 100%;
-    padding: 14px;
-    border-radius: 12px;
+    padding: 16px;
+    border-radius: 14px;
     border: none;
     font-family: var(--mono);
     font-size: 13px;
@@ -273,8 +274,8 @@
   }
   .btn-danger { background: rgba(255,68,68,0.15); color: var(--red); border: 1px solid rgba(255,68,68,0.3); }
   .btn + .btn { margin-top: 8px; }
-  .btn svg { width: 18px; height: 18px; flex-shrink: 0; }
-
+  .btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+ 
   /* ── FORM ── */
   .form-group { margin-bottom: 12px; }
   .form-label {
@@ -289,13 +290,13 @@
   }
   .form-input, .form-select {
     width: 100%;
-    padding: 12px 14px;
+    padding: 14px 16px;
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 10px;
     color: var(--text);
     font-family: var(--mono);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     outline: none;
     transition: border-color 0.15s;
@@ -303,7 +304,7 @@
   }
   .form-input:focus, .form-select:focus { border-color: var(--cyan); }
   .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237B9CC4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-
+ 
   /* ── TOGGLE ── */
   .toggle-group {
     display: flex;
@@ -312,7 +313,7 @@
   }
   .toggle-btn {
     flex: 1;
-    padding: 10px;
+    padding: 13px;
     border-radius: 10px;
     border: 1px solid var(--border);
     background: var(--bg3);
@@ -327,13 +328,13 @@
   }
   .toggle-btn.active-pickup { background: rgba(0,212,255,0.15); color: var(--cyan); border-color: rgba(0,212,255,0.4); }
   .toggle-btn.active-shopping { background: rgba(255,214,0,0.15); color: var(--yellow); border-color: rgba(255,214,0,0.4); }
-
+ 
   /* ── STATS ── */
   .stat-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 12px 0;
     border-bottom: 1px solid var(--border);
   }
   .stat-row:last-child { border-bottom: none; }
@@ -351,7 +352,7 @@
   .stat-value.green { color: var(--green); }
   .stat-value.cyan { color: var(--cyan); }
   .stat-value.orange { color: var(--orange); }
-
+ 
   /* ── EVALUATOR ── */
   .rating-bar {
     height: 6px;
@@ -375,7 +376,7 @@
   }
   .rating-score {
     font-family: var(--mono);
-    font-size: 42px;
+    font-size: 52px;
     font-weight: 800;
     line-height: 1;
     letter-spacing: -2px;
@@ -393,14 +394,14 @@
     margin-top: 8px;
     color: var(--text2);
   }
-
+ 
   /* ── TRIP LIST ── */
   .trip-item {
     background: var(--bg2);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 12px 14px;
-    margin-bottom: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -442,7 +443,7 @@
     color: var(--text3);
     text-align: right;
   }
-
+ 
   /* ── EMPTY STATE ── */
   .empty {
     text-align: center;
@@ -452,7 +453,7 @@
   .empty svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.1; }
   .empty-title { font-family: var(--mono); font-size: 14px; font-weight: 700; margin-bottom: 6px; }
   .empty-sub { font-size: 13px; }
-
+ 
   /* ── SECTION HEADER ── */
   .section-header {
     font-family: var(--mono);
@@ -465,7 +466,7 @@
     padding: 0 2px;
   }
   .section-header:first-child { margin-top: 0; }
-
+ 
   /* ── STATS GRID ── */
   .stats-grid {
     display: grid;
@@ -481,7 +482,7 @@
   }
   .stat-card-value {
     font-family: var(--mono);
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 800;
     color: var(--text);
     line-height: 1;
@@ -495,7 +496,7 @@
     color: var(--text3);
     margin-top: 4px;
   }
-
+ 
   /* ── COMPLETE MODAL ── */
   .modal-overlay {
     position: fixed;
@@ -516,8 +517,10 @@
     border: 1px solid var(--border);
     border-radius: 24px 24px 0 0;
     padding: 24px 20px;
+    max-height: 92dvh;
+    overflow-y: auto;
     width: 100%;
-    max-width: 430px;
+    max-width: 440px;
     transform: translateY(100%);
     transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
   }
@@ -536,18 +539,18 @@
     margin-bottom: 16px;
     text-align: center;
   }
-
+ 
   /* ── INPUT ROW ── */
   .input-row {
     display: flex;
     gap: 8px;
   }
   .input-row .form-group { flex: 1; }
-
+ 
   /* ── NOTIFICATION ── */
   .toast {
     position: fixed;
-    top: calc(var(--safe-top) + 70px);
+    top: calc(var(--safe-top) + 16px);
     left: 50%;
     transform: translateX(-50%) translateY(-20px);
     background: var(--bg3);
@@ -565,11 +568,11 @@
     pointer-events: none;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
+ 
   /* ── MILEAGE ── */
   .miles-big {
     font-family: var(--mono);
-    font-size: 56px;
+    font-size: 64px;
     font-weight: 800;
     color: var(--cyan);
     letter-spacing: -3px;
@@ -583,7 +586,7 @@
     text-transform: uppercase;
     margin-left: 4px;
   }
-
+ 
   /* ── SCROLLABLE TABS ── */
   .history-filters {
     display: flex;
@@ -595,7 +598,7 @@
   .history-filters::-webkit-scrollbar { display: none; }
   .filter-chip {
     flex-shrink: 0;
-    padding: 6px 14px;
+    padding: 9px 16px;
     border-radius: 100px;
     border: 1px solid var(--border);
     background: var(--bg2);
@@ -609,7 +612,7 @@
     transition: all 0.15s;
   }
   .filter-chip.active { background: var(--cyan); color: #000; border-color: var(--cyan); }
-
+ 
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
@@ -619,7 +622,7 @@
 </head>
 <body>
 <div class="app">
-
+ 
   <!-- HEADER -->
   <div class="header">
     <div class="header-icon">
@@ -630,10 +633,10 @@
     <span class="header-title">SparkTrack</span>
     <span class="header-subtitle" id="headerDate"></span>
   </div>
-
+ 
   <!-- CONTENT -->
   <div class="content">
-
+ 
     <!-- TRIP VIEW -->
     <div class="view active" id="view-trip">
       <div id="no-trip-view">
@@ -684,7 +687,7 @@
           </button>
         </div>
       </div>
-
+ 
       <div id="active-trip-view" style="display:none">
         <div class="card">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
@@ -694,7 +697,7 @@
             </div>
             <div id="at-phase-badge"></div>
           </div>
-
+ 
           <!-- Phase steps -->
           <div class="phase-steps" id="phase-steps">
             <div class="phase-step">
@@ -718,17 +721,17 @@
               <div class="phase-step-label" id="step-delivering-label">Delivering</div>
             </div>
           </div>
-
+ 
           <!-- Timer -->
           <div style="margin:16px 0;">
             <div class="timer" id="trip-timer">0:00</div>
             <div class="timer-label" id="timer-label">Time since accepted</div>
           </div>
-
+ 
           <!-- Action button -->
           <div id="trip-action-btn"></div>
         </div>
-
+ 
         <div class="card">
           <div class="card-title">Trip Details</div>
           <div class="stat-row">
@@ -748,14 +751,14 @@
             <span class="stat-value" id="detail-started"></span>
           </div>
         </div>
-
+ 
         <button class="btn btn-danger" onclick="cancelTrip()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           Cancel Trip
         </button>
       </div>
     </div>
-
+ 
     <!-- EVALUATE VIEW -->
     <div class="view" id="view-evaluate">
       <div class="card">
@@ -782,14 +785,14 @@
           <input class="form-input" type="number" id="eval-time" inputmode="numeric" placeholder="30" step="1" min="0" oninput="evaluateOffer()">
         </div>
       </div>
-
+ 
       <div id="eval-result" style="display:none">
         <div class="rating-result" id="rating-box">
           <div class="rating-score" id="rating-score">$0.00</div>
           <div class="rating-label" id="rating-label">per mile</div>
           <div class="rating-verdict" id="rating-verdict"></div>
         </div>
-
+ 
         <div class="card" style="margin-top:12px;">
           <div class="card-title">Breakdown</div>
           <div class="stat-row">
@@ -819,7 +822,7 @@
         </div>
       </div>
     </div>
-
+ 
     <!-- HISTORY VIEW -->
     <div class="view" id="view-history">
       <div id="history-stats" class="stats-grid" style="display:none"></div>
@@ -831,7 +834,7 @@
       </div>
       <div id="history-list"></div>
     </div>
-
+ 
     <!-- MILES VIEW -->
     <div class="view" id="view-miles">
       <div class="card">
@@ -848,7 +851,7 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Gas Cost Estimate</div>
         <div class="stat-row">
@@ -876,7 +879,7 @@
           <span class="stat-value green" id="gas-net">—</span>
         </div>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Miles Log</div>
         <div id="miles-log-list">
@@ -885,12 +888,12 @@
           </div>
         </div>
       </div>
-
+ 
       <button class="btn btn-ghost" onclick="resetMiles()" style="margin-top:4px;">
         Reset Miles Log
       </button>
     </div>
-
+ 
     <!-- SETTINGS VIEW -->
     <div class="view" id="view-settings">
       <div class="card">
@@ -908,7 +911,7 @@
           Save Settings
         </button>
       </div>
-
+ 
       <div class="card">
         <div class="card-title">Data</div>
         <button class="btn btn-ghost" onclick="exportCSV()" style="margin-bottom:0;">
@@ -924,16 +927,16 @@
           Clear All Trip Data
         </button>
       </div>
-
+ 
       <div class="card" style="text-align:center;">
         <div class="card-title" style="text-align:center;">SparkTrack</div>
         <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 · El Paso, TX</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;">⚡ Built for Spark Drivers</div>
       </div>
     </div>
-
+ 
   </div><!-- /content -->
-
+ 
   <!-- TAB BAR -->
   <div class="tabbar">
     <button class="tab active" id="tab-trip" onclick="switchTab('trip')">
@@ -958,9 +961,9 @@
       Settings
     </button>
   </div>
-
+ 
 </div><!-- /app -->
-
+ 
 <!-- COMPLETE MODAL -->
 <div class="modal-overlay" id="complete-modal">
   <div class="modal">
@@ -1003,10 +1006,10 @@
     <button class="btn btn-ghost" onclick="closeCompleteModal()" style="margin-top:8px;">Cancel</button>
   </div>
 </div>
-
+ 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
-
+ 
 <script>
 // ── STATE ──────────────────────────────────────────
 let activeTrip = null;
@@ -1014,7 +1017,7 @@ let timerInterval = null;
 let currentTripType = 'Pickup';
 let currentEvalType = 'Pickup';
 let historyFilter = 'all';
-
+ 
 // ── STORAGE ────────────────────────────────────────
 function load(key, def) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; }
@@ -1022,33 +1025,33 @@ function load(key, def) {
 function save(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
 }
-
+ 
 function getTrips() { return load('st_trips', []); }
 function saveTrips(t) { save('st_trips', t); }
 function getSettings() { return load('st_settings', { mpg: '', gasPrice: '' }); }
 function getMilesLog() { return load('st_miles', []); }
 function saveMilesLog(m) { save('st_miles', m); }
-
+ 
 // ── INIT ───────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   // Header date
   document.getElementById('headerDate').textContent =
     new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-
+ 
   // Restore active trip
   activeTrip = load('st_active', null);
   if (activeTrip) showActiveTrip();
-
+ 
   // Load settings
   const s = getSettings();
   document.getElementById('set-mpg').value = s.mpg || '';
   document.getElementById('set-gas').value = s.gasPrice || '';
-
+ 
   renderHistory();
   renderMiles();
   updateTripDot();
 });
-
+ 
 // ── TABS ───────────────────────────────────────────
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1058,14 +1061,14 @@ function switchTab(tab) {
   if (tab === 'history') renderHistory();
   if (tab === 'miles') renderMiles();
 }
-
+ 
 // ── TRIP ───────────────────────────────────────────
 function setTripType(type) {
   currentTripType = type;
   document.getElementById('type-pickup').className = 'toggle-btn' + (type === 'Pickup' ? ' active-pickup' : '');
   document.getElementById('type-shopping').className = 'toggle-btn' + (type === 'Shopping' ? ' active-shopping' : '');
 }
-
+ 
 function startTrip() {
   const store = document.getElementById('trip-store').value;
   const stops = parseInt(document.getElementById('trip-stops').value);
@@ -1086,7 +1089,7 @@ function startTrip() {
   showActiveTrip();
   showToast('Trip started ⚡');
 }
-
+ 
 function showActiveTrip() {
   document.getElementById('no-trip-view').style.display = 'none';
   document.getElementById('active-trip-view').style.display = 'block';
@@ -1094,11 +1097,11 @@ function showActiveTrip() {
   startTimer();
   updateTripDot();
 }
-
+ 
 function updateActiveTripUI() {
   if (!activeTrip) return;
   const phase = activeTrip.phase;
-
+ 
   document.getElementById('at-store-name').textContent = activeTrip.storeName;
   document.getElementById('at-trip-meta').textContent =
     activeTrip.tripType + ' · ' + activeTrip.stops + (activeTrip.stops === 1 ? ' stop' : ' stops');
@@ -1107,7 +1110,7 @@ function updateActiveTripUI() {
   document.getElementById('detail-type').textContent = activeTrip.tripType;
   document.getElementById('detail-stops').textContent = activeTrip.stops;
   document.getElementById('detail-started').textContent = fmtTime(activeTrip.acceptedAt);
-
+ 
   // Steps
   const steps = ['accepted', 'atStore', 'delivering'];
   const phaseIdx = steps.indexOf(phase);
@@ -1123,11 +1126,11 @@ function updateActiveTripUI() {
   });
   document.getElementById('conn-1').className = 'phase-connector' + (phaseIdx > 0 ? ' done' : '');
   document.getElementById('conn-2').className = 'phase-connector' + (phaseIdx > 1 ? ' done' : '');
-
+ 
   // Timer label
   const labels2 = { accepted: 'Time since accepted', atStore: 'Time at store', delivering: 'Time delivering' };
   document.getElementById('timer-label').textContent = labels2[phase] || 'Elapsed';
-
+ 
   // Action button
   const btn = document.getElementById('trip-action-btn');
   if (phase === 'accepted') {
@@ -1147,7 +1150,7 @@ function updateActiveTripUI() {
     </button>`;
   }
 }
-
+ 
 function advancePhase() {
   if (!activeTrip) return;
   if (activeTrip.phase === 'accepted') {
@@ -1162,11 +1165,11 @@ function advancePhase() {
   save('st_active', activeTrip);
   updateActiveTripUI();
 }
-
+ 
 function completeTrip() {
   openCompleteModal();
 }
-
+ 
 function openCompleteModal() {
   if (activeTrip) {
     const elapsed = Math.floor((Date.now() - activeTrip.acceptedAt) / 1000);
@@ -1185,7 +1188,7 @@ function openCompleteModal() {
   }
   document.getElementById('complete-modal').classList.add('show');
 }
-
+ 
 function calcMilesDriven() {
   const end = parseFloat(document.getElementById('comp-odometer-end').value);
   if (!end || !activeTrip) { document.getElementById('comp-miles-val').textContent = '—'; return; }
@@ -1197,11 +1200,11 @@ function calcMilesDriven() {
     document.getElementById('comp-miles-val').textContent = '—';
   }
 }
-
+ 
 function closeCompleteModal() {
   document.getElementById('complete-modal').classList.remove('show');
 }
-
+ 
 function saveComplete() {
   const base = parseFloat(document.getElementById('comp-base').value) || 0;
   const extra = parseFloat(document.getElementById('comp-extra').value) || 0;
@@ -1210,7 +1213,7 @@ function saveComplete() {
   const odoStart = activeTrip.odometerStart || null;
   const miles = (odoEnd && odoStart && odoEnd > odoStart) ? (odoEnd - odoStart) : 0;
   const notes = document.getElementById('comp-notes').value;
-
+ 
   activeTrip.completedAt = Date.now();
   activeTrip.elapsedSeconds = Math.floor((activeTrip.completedAt - activeTrip.acceptedAt) / 1000);
   activeTrip.phase = 'complete';
@@ -1221,37 +1224,37 @@ function saveComplete() {
   activeTrip.miles = miles;
   activeTrip.odometerEnd = odoEnd;
   activeTrip.notes = notes;
-
+ 
   // Auto-log miles
   if (miles > 0) {
     const log = getMilesLog();
     log.unshift({ date: Date.now(), miles, tripId: activeTrip.id, store: activeTrip.storeName });
     saveMilesLog(log);
   }
-
+ 
   const trips = getTrips();
   trips.unshift(activeTrip);
   saveTrips(trips);
-
+ 
   activeTrip = null;
   save('st_active', null);
   clearInterval(timerInterval);
-
+ 
   closeCompleteModal();
   document.getElementById('active-trip-view').style.display = 'none';
   document.getElementById('no-trip-view').style.display = 'block';
   updateTripDot();
-
+ 
   // Reset form
   ['comp-base','comp-extra','comp-tip','comp-odometer-end','comp-notes'].forEach(id => {
     document.getElementById(id).value = '';
   });
-
+ 
   const total = (base + extra + tip).toFixed(2);
   showToast('Trip saved · $' + total + ' earned 💰');
   renderHistory();
 }
-
+ 
 function cancelTrip() {
   if (!confirm('Cancel this trip?')) return;
   activeTrip = null;
@@ -1262,31 +1265,31 @@ function cancelTrip() {
   updateTripDot();
   showToast('Trip cancelled');
 }
-
+ 
 function startTimer() {
   clearInterval(timerInterval);
   updateTimer();
   timerInterval = setInterval(updateTimer, 1000);
 }
-
+ 
 function updateTimer() {
   if (!activeTrip) return;
   let start;
   if (activeTrip.phase === 'atStore') start = activeTrip.atStoreAt;
   else if (activeTrip.phase === 'delivering') start = activeTrip.deliveringAt;
   else start = activeTrip.acceptedAt;
-
+ 
   const elapsed = Math.floor((Date.now() - start) / 1000);
   const m = Math.floor(elapsed / 60);
   const s = elapsed % 60;
   document.getElementById('trip-timer').textContent = m + ':' + String(s).padStart(2, '0');
 }
-
+ 
 function updateTripDot() {
   const dot = document.getElementById('trip-dot');
   dot.className = 'tab-dot' + (activeTrip ? ' show' : '');
 }
-
+ 
 // ── EVALUATE ───────────────────────────────────────
 function setEvalType(type) {
   currentEvalType = type;
@@ -1294,45 +1297,45 @@ function setEvalType(type) {
   document.getElementById('eval-type-shopping').className = 'toggle-btn' + (type === 'Shopping' ? ' active-shopping' : '');
   evaluateOffer();
 }
-
+ 
 function evaluateOffer() {
   const pay = parseFloat(document.getElementById('eval-pay').value);
   const miles = parseFloat(document.getElementById('eval-miles').value);
   const time = parseFloat(document.getElementById('eval-time').value);
-
+ 
   if (!pay || !miles) { document.getElementById('eval-result').style.display = 'none'; return; }
-
+ 
   const deduct = currentEvalType === 'Shopping' ? 3 : 0;
   const effective = Math.max(0, pay - deduct);
   const perMile = effective / miles;
   const perHr = time > 0 ? (pay / (time / 60)) : null;
-
+ 
   // Rating
   let color, label, verdict, pct;
   if (perMile < 1.0) { color = '#FF4444'; label = 'PASS'; verdict = 'Below $1.00/mi — not worth it'; pct = (perMile / 1.0) * 33; }
   else if (perMile < 1.5) { color = '#FFD600'; label = 'BORDERLINE'; verdict = 'Okay if you need the activity'; pct = 33 + ((perMile - 1.0) / 0.5) * 33; }
   else if (perMile < 2.0) { color = '#00D4FF'; label = 'GOOD'; verdict = 'Solid offer — take it'; pct = 66 + ((perMile - 1.5) / 0.5) * 17; }
   else { color = '#00E676'; label = 'TAKE IT'; verdict = 'Excellent offer — go!'; pct = 100; }
-
+ 
   document.getElementById('eval-result').style.display = 'block';
-
+ 
   const box = document.getElementById('rating-box');
   box.style.background = color + '18';
   box.style.borderColor = color + '44';
-
+ 
   document.getElementById('rating-score').style.color = color;
   document.getElementById('rating-score').textContent = '$' + perMile.toFixed(2);
   document.getElementById('rating-label').textContent = 'per mile · ' + label;
   document.getElementById('rating-label').style.color = color;
   document.getElementById('rating-verdict').textContent = verdict;
-
+ 
   document.getElementById('bd-raw').textContent = '$' + pay.toFixed(2);
   const deductRow = document.getElementById('bd-deduct-row');
   deductRow.style.display = deduct > 0 ? 'flex' : 'none';
   document.getElementById('bd-deduct').textContent = '-$' + deduct.toFixed(2);
   document.getElementById('bd-effective').textContent = '$' + effective.toFixed(2);
   document.getElementById('bd-permile').textContent = '$' + perMile.toFixed(2) + '/mi';
-
+ 
   const phrRow = document.getElementById('bd-perhr-row');
   if (perHr !== null) {
     phrRow.style.display = 'flex';
@@ -1340,13 +1343,13 @@ function evaluateOffer() {
   } else {
     phrRow.style.display = 'none';
   }
-
+ 
   // Personal avg
   const trips = getTrips().filter(t => t.totalEarnings);
   const avg = trips.length ? trips.reduce((s, t) => s + t.totalEarnings, 0) / trips.length : null;
   document.getElementById('bd-avg').textContent = avg ? '$' + avg.toFixed(2) : 'No data yet';
 }
-
+ 
 // ── HISTORY ────────────────────────────────────────
 function filterHistory(f, el) {
   historyFilter = f;
@@ -1354,10 +1357,10 @@ function filterHistory(f, el) {
   el.classList.add('active');
   renderHistory();
 }
-
+ 
 function renderHistory() {
   let trips = getTrips();
-
+ 
   // Stats
   if (trips.length) {
     const total = trips.reduce((s, t) => s + (t.totalEarnings || 0), 0);
@@ -1374,12 +1377,12 @@ function renderHistory() {
   } else {
     document.getElementById('history-stats').style.display = 'none';
   }
-
+ 
   // Filter
   if (historyFilter === 'Pickup') trips = trips.filter(t => t.tripType === 'Pickup');
   else if (historyFilter === 'Shopping') trips = trips.filter(t => t.tripType === 'Shopping');
   else if (historyFilter === 'tipped') trips = trips.filter(t => (t.tips || 0) > 0);
-
+ 
   const list = document.getElementById('history-list');
   if (!trips.length) {
     list.innerHTML = `<div class="empty">
@@ -1389,7 +1392,7 @@ function renderHistory() {
     </div>`;
     return;
   }
-
+ 
   list.innerHTML = trips.map(t => {
     const icon = t.tripType === 'Shopping'
       ? `<div class="trip-item-icon" style="background:rgba(255,214,0,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFD600" stroke-width="1.8" width="20" height="20"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>`
@@ -1409,7 +1412,7 @@ function renderHistory() {
     </div>`;
   }).join('');
 }
-
+ 
 // ── MILES ──────────────────────────────────────────
 function addMiles() {
   const val = parseFloat(document.getElementById('miles-input').value);
@@ -1421,15 +1424,15 @@ function addMiles() {
   renderMiles();
   showToast(val.toFixed(1) + ' miles added');
 }
-
+ 
 function renderMiles() {
   const log = getMilesLog();
   const total = log.reduce((s, e) => s + e.miles, 0);
   const s = getSettings();
-
+ 
   document.getElementById('miles-total').textContent = total.toFixed(1);
   document.getElementById('gas-miles').textContent = total.toFixed(1) + ' mi';
-
+ 
   if (s.mpg && s.gasPrice) {
     const gallons = total / parseFloat(s.mpg);
     const cost = gallons * parseFloat(s.gasPrice);
@@ -1445,7 +1448,7 @@ function renderMiles() {
       document.getElementById(id).textContent = '—';
     });
   }
-
+ 
   const listEl = document.getElementById('miles-log-list');
   if (!log.length) {
     listEl.innerHTML = '<div class="empty" style="padding:20px;"><div class="empty-sub" style="color:var(--text3);font-size:12px;">No miles logged yet</div></div>';
@@ -1458,14 +1461,14 @@ function renderMiles() {
     </div>
   `).join('');
 }
-
+ 
 function resetMiles() {
   if (!confirm('Clear all miles logs?')) return;
   saveMilesLog([]);
   renderMiles();
   showToast('Miles log cleared');
 }
-
+ 
 // ── SETTINGS ───────────────────────────────────────
 function saveSettings() {
   const mpg = document.getElementById('set-mpg').value;
@@ -1474,7 +1477,7 @@ function saveSettings() {
   showToast('Settings saved ✓');
   renderMiles();
 }
-
+ 
 function exportCSV() {
   const trips = getTrips();
   if (!trips.length) { showToast('No trips to export'); return; }
@@ -1502,7 +1505,7 @@ function exportCSV() {
   URL.revokeObjectURL(url);
   showToast('Exported ' + trips.length + ' trips');
 }
-
+ 
 function exportJSON() {
   const trips = getTrips();
   if (!trips.length) { showToast('No trips to export'); return; }
@@ -1513,35 +1516,35 @@ function exportJSON() {
   URL.revokeObjectURL(url);
   showToast('Exported ' + trips.length + ' trips as JSON');
 }
-
+ 
 function confirmClear() {
   if (!confirm('Delete ALL trip data? This cannot be undone.')) return;
   saveTrips([]);
   renderHistory();
   showToast('All data cleared');
 }
-
+ 
 // ── HELPERS ────────────────────────────────────────
 function phaseBadgeHTML(phase) {
   const names = { accepted: 'Accepted', atStore: 'At Store', delivering: 'Delivering', complete: 'Complete' };
   return `<span class="phase-badge ${phase}">${names[phase] || phase}</span>`;
 }
-
+ 
 function fmtTime(ts) {
   return new Date(ts).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 }
-
+ 
 function fmtDate(ts) {
   return new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
-
+ 
 function showToast(msg) {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), 2500);
 }
-
+ 
 // ── PWA MANIFEST (inline) ──────────────────────────
 const manifest = {
   name: 'SparkTrack',
@@ -1560,7 +1563,7 @@ const mURL = URL.createObjectURL(mBlob);
 const mLink = document.createElement('link');
 mLink.rel = 'manifest'; mLink.href = mURL;
 document.head.appendChild(mLink);
-
+ 
 // ── SERVICE WORKER ─────────────────────────────────
 if ('serviceWorker' in navigator) {
   const swCode = `
@@ -1574,3 +1577,4 @@ if ('serviceWorker' in navigator) {
 </script>
 </body>
 </html>
+ 
