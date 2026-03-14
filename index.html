@@ -158,18 +158,29 @@
   const ANDROID_URL = 'sparktrack_android.html';
 
   window.addEventListener('DOMContentLoaded', () => {
+    const cached = localStorage.getItem('st_os');
+    if (cached === 'ios') {
+      window.location.href = IOS_URL;
+      return;
+    }
+    if (cached === 'android') {
+      window.location.href = ANDROID_URL;
+      return;
+    }
+
     const ua = navigator.userAgent || '';
     const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
     const isAndroid = /Android/.test(ua);
 
     if (isIOS) {
+      localStorage.setItem('st_os', 'ios');
       document.getElementById('redirect-msg').innerHTML = 'Redirecting to <span>iPhone</span> version\u2026';
       setTimeout(() => { window.location.href = IOS_URL; }, 1200);
     } else if (isAndroid) {
+      localStorage.setItem('st_os', 'android');
       document.getElementById('redirect-msg').innerHTML = 'Redirecting to <span>Android</span> version\u2026';
       setTimeout(() => { window.location.href = ANDROID_URL; }, 1200);
     } else {
-      // Desktop or unrecognized — show manual choice
       document.getElementById('auto-section').style.display = 'none';
       document.getElementById('manual-section').style.display = 'block';
     }
