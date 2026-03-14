@@ -1226,6 +1226,11 @@ function saveComplete() {
   activeTrip.miles = miles;
   activeTrip.odometerEnd = odoEnd;
   activeTrip.notes = notes;
+  const s = getSettings();
+  activeTrip.gasPrice = s.gasPrice ? parseFloat(s.gasPrice) : null;
+  activeTrip.gasMpg = s.mpg ? parseFloat(s.mpg) : null;
+  activeTrip.gasUsedGallons = (miles && s.mpg) ? parseFloat((miles / parseFloat(s.mpg)).toFixed(3)) : null;
+  activeTrip.gasCost = (activeTrip.gasUsedGallons && s.gasPrice) ? parseFloat((activeTrip.gasUsedGallons * parseFloat(s.gasPrice)).toFixed(2)) : null;
  
   // Auto-log miles
   if (miles > 0) {
@@ -1483,12 +1488,20 @@ function saveSettings() {
 function exportCSV() {
   const trips = getTrips();
   if (!trips.length) { showToast('No trips to export'); return; }
-  const header = 'Date,Store,Type,Stops,Base Pay,Extra,Tips,Total,Miles,Odo Start,Odo End,Elapsed (min),Notes';
+  const header = 'Date,Store,Type,Stops,Time Accepted,Time At Store,Time Delivering,Time Completed,Transit Time (min),Shop/Wait Time (min),Delivery Time (min),Elapsed Total (min),Base Pay,Extra,Tips,Total,Miles,Odo Start,Odo End,Gas Price,Gas Used (gal),Gas Cost,Notes';
   const rows = trips.map(t => [
     fmtDate(t.acceptedAt),
     '"' + t.storeName + '"',
     t.tripType,
     t.stops,
+    t.acceptedAt ? fmtTime(t.acceptedAt) : '',
+    t.atStoreAt ? fmtTime(t.atStoreAt) : '',
+    t.deliveringAt ? fmtTime(t.deliveringAt) : '',
+    t.completedAt ? fmtTime(t.completedAt) : '',
+    (t.acceptedAt && t.atStoreAt) ? Math.round((t.atStoreAt - t.acceptedAt)/60000) : '',
+    (t.atStoreAt && t.deliveringAt) ? Math.round((t.deliveringAt - t.atStoreAt)/60000) : '',
+    (t.deliveringAt && t.completedAt) ? Math.round((t.completedAt - t.deliveringAt)/60000) : '',
+    t.elapsedSeconds ? Math.round(t.elapsedSeconds/60) : '',
     (t.basePay||0).toFixed(2),
     (t.extraEarnings||0).toFixed(2),
     (t.tips||0).toFixed(2),
@@ -1496,7 +1509,9 @@ function exportCSV() {
     (t.miles||0).toFixed(1),
     t.odometerStart || '',
     t.odometerEnd || '',
-    t.elapsedSeconds ? Math.round(t.elapsedSeconds/60) : '',
+    t.gasPrice ? t.gasPrice.toFixed(2) : '',
+    t.gasUsedGallons ? t.gasUsedGallons.toFixed(3) : '',
+    t.gasCost ? t.gasCost.toFixed(2) : '',
     '"' + (t.notes||'') + '"'
   ].join(','));
   const csv = [header, ...rows].join('\n');
