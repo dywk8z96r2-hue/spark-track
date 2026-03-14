@@ -1556,6 +1556,8 @@ function exportJSON() {
 function confirmClear() {
   if (!confirm('Delete ALL trip data? This cannot be undone.')) return;
   saveTrips([]);
+  setUnexported(0);
+  updateExportBadge();
   renderHistory();
   showToast('All data cleared');
 }
