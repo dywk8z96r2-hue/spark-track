@@ -135,6 +135,8 @@
     display: none;
   }
   .tab-dot.show { display: block; }
+  .export-badge { position: absolute; top: 6px; right: calc(50% - 20px); background: var(--green); color: #000; font-family: var(--mono); font-size: 8px; font-weight: 800; min-width: 16px; height: 16px; border-radius: 8px; display: none; align-items: center; justify-content: center; padding: 0 4px; }
+  .export-badge.show { display: flex; }
  
   /* ── VIEWS ── */
   .view { display: none; }
@@ -959,6 +961,7 @@
       Miles
     </button>
     <button class="tab" id="tab-settings" onclick="switchTab('settings')">
+      <div class="export-badge" id="export-badge"></div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
       Settings
     </button>
@@ -1033,6 +1036,15 @@ function saveTrips(t) { save('st_trips', t); }
 function getSettings() { return load('st_settings', { mpg: '', gasPrice: '' }); }
 function getMilesLog() { return load('st_miles', []); }
 function saveMilesLog(m) { save('st_miles', m); }
+function getUnexported() { return load('st_unexported', 0); }
+function setUnexported(n) { save('st_unexported', n); }
+function updateExportBadge() {
+  const n = getUnexported();
+  const el = document.getElementById('export-badge');
+  if (!el) return;
+  el.textContent = n > 0 ? n : '';
+  el.className = 'export-badge' + (n > 0 ? ' show' : '');
+}
  
 // ── INIT ───────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
@@ -1052,6 +1064,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderHistory();
   renderMiles();
   updateTripDot();
+  updateExportBadge();
 });
  
 // ── TABS ───────────────────────────────────────────
@@ -1258,6 +1271,8 @@ function saveComplete() {
   });
  
   const total = (base + extra + tip).toFixed(2);
+  setUnexported(getUnexported() + 1);
+  updateExportBadge();
   showToast('Trip saved · $' + total + ' earned 💰');
   renderHistory();
 }
@@ -1518,8 +1533,10 @@ function exportCSV() {
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'sparktrack_export.csv'; a.click();
+  a.href = url; a.download = 'sparktrack.csv'; a.click();
   URL.revokeObjectURL(url);
+  setUnexported(0);
+  updateExportBadge();
   showToast('Exported ' + trips.length + ' trips');
 }
  
@@ -1529,8 +1546,10 @@ function exportJSON() {
   const blob = new Blob([JSON.stringify(trips, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'sparktrack_export.json'; a.click();
+  a.href = url; a.download = 'sparktrack.json'; a.click();
   URL.revokeObjectURL(url);
+  setUnexported(0);
+  updateExportBadge();
   showToast('Exported ' + trips.length + ' trips as JSON');
 }
  
