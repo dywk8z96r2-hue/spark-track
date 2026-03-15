@@ -48,13 +48,3 @@ If you dismissed the install banner, you can still install manually: tap the **t
 ## How your data is stored
 
 All data is saved locally on your phone using your browser's built-in storage (localStorage). Nothing is sent to any server. Your trip history, settings, and mileage log stay on your device until you clear them or uninstall the app.
-
----
-
-## Files in this repo
-
-| File | Description |
-|------|-------------|
-| `index.html` | Landing page — detects your device and redirects automatically |
-| `sparktrack_ios.html` | iPhone-optimized version |
-| `sparktrack_android.html` | Android-optimized version |
