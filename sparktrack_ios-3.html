@@ -137,6 +137,9 @@
   .tab-dot.show { display: block; }
   .export-badge { position: absolute; top: 6px; right: calc(50% - 20px); background: var(--green); color: #000; font-family: var(--mono); font-size: 8px; font-weight: 800; min-width: 16px; height: 16px; border-radius: 8px; display: none; align-items: center; justify-content: center; padding: 0 4px; }
   .export-badge.show { display: flex; }
+
+  .export-badge { position: absolute; top: 6px; right: calc(50% - 20px); background: var(--green); color: #000; font-family: var(--mono); font-size: 8px; font-weight: 800; min-width: 16px; height: 16px; border-radius: 8px; display: none; align-items: center; justify-content: center; padding: 0 4px; }
+  .export-badge.show { display: flex; }
  
   /* ── VIEWS ── */
   .view { display: none; }
@@ -712,7 +715,6 @@
   .theme-swatch.active .theme-check { display: flex; }
   .theme-check svg { width: 10px; height: 10px; }
 
-
   /* ── ONBOARDING TOUR ── */
   .tour-overlay {
     position: fixed;
@@ -1129,49 +1131,30 @@
       <div class="card">
         <div class="card-title">Appearance</div>
         <div class="theme-grid" id="theme-grid">
-
-          <!-- Midnight -->
-          <div class="theme-swatch active" id="swatch-midnight" onclick="setTheme('midnight')"
-            style="background:linear-gradient(135deg,#050D1E,#0D1E36);">
+          <div class="theme-swatch active" id="swatch-midnight" onclick="setTheme('midnight')" style="background:linear-gradient(135deg,#050D1E,#0D1E36);">
             <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span class="theme-swatch-name" style="color:#A8C4E0;">Midnight</span>
           </div>
-
-          <!-- OLED -->
-          <div class="theme-swatch" id="swatch-oled" onclick="setTheme('oled')"
-            style="background:linear-gradient(135deg,#000000,#111111);">
+          <div class="theme-swatch" id="swatch-oled" onclick="setTheme('oled')" style="background:linear-gradient(135deg,#000000,#111111);">
             <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span class="theme-swatch-name" style="color:#CCCCCC;">OLED</span>
           </div>
-
-          <!-- Slate -->
-          <div class="theme-swatch" id="swatch-slate" onclick="setTheme('slate')"
-            style="background:linear-gradient(135deg,#0D1117,#1C2333);">
+          <div class="theme-swatch" id="swatch-slate" onclick="setTheme('slate')" style="background:linear-gradient(135deg,#0D1117,#1C2333);">
             <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span class="theme-swatch-name" style="color:#8B949E;">Slate</span>
           </div>
-
-          <!-- Neon -->
-          <div class="theme-swatch" id="swatch-neon" onclick="setTheme('neon')"
-            style="background:linear-gradient(135deg,#05000F,#130030);">
+          <div class="theme-swatch" id="swatch-neon" onclick="setTheme('neon')" style="background:linear-gradient(135deg,#05000F,#130030);">
             <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span class="theme-swatch-name" style="color:#00FF9D;">Neon</span>
           </div>
-
-          <!-- Desert -->
-          <div class="theme-swatch" id="swatch-desert" onclick="setTheme('desert')"
-            style="background:linear-gradient(135deg,#1C1A14,#35322A);">
+          <div class="theme-swatch" id="swatch-desert" onclick="setTheme('desert')" style="background:linear-gradient(135deg,#1C1A14,#35322A);">
             <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span class="theme-swatch-name" style="color:#C8A87A;">Desert</span>
           </div>
-
-          <!-- Light -->
-          <div class="theme-swatch" id="swatch-light" onclick="setTheme('light')"
-            style="background:linear-gradient(135deg,#F0F4F8,#FFFFFF);">
+          <div class="theme-swatch" id="swatch-light" onclick="setTheme('light')" style="background:linear-gradient(135deg,#F0F4F8,#FFFFFF);">
             <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <span class="theme-swatch-name" style="color:#4A6080;">Light</span>
           </div>
-
         </div>
       </div>
 
@@ -1204,6 +1187,7 @@
       Miles
     </button>
     <button class="tab" id="tab-settings" onclick="switchTab('settings')">
+      <div class="export-badge" id="export-badge"></div>
       <div class="export-badge" id="export-badge"></div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
       Settings
@@ -1322,8 +1306,6 @@ window.addEventListener('DOMContentLoaded', () => {
   renderMiles();
   updateTripDot();
   updateExportBadge();
-  loadTheme();
-  checkFirstLaunch();
 });
  
 // ── TABS ───────────────────────────────────────────
@@ -1530,6 +1512,8 @@ function saveComplete() {
   });
  
   const total = (base + extra + tip).toFixed(2);
+  setUnexported(getUnexported() + 1);
+  updateExportBadge();
   setUnexported(getUnexported() + 1);
   updateExportBadge();
   showToast('Trip saved · $' + total + ' earned 💰');
@@ -1759,31 +1743,6 @@ function saveSettings() {
   renderMiles();
 }
  
-// ── THEMES ─────────────────────────────────────────
-const THEMES = ['midnight','oled','slate','neon','desert','light'];
-
-function setTheme(name) {
-  if (!THEMES.includes(name)) name = 'midnight';
-  document.documentElement.setAttribute('data-theme', name);
-  save('st_theme', name);
-  // Update swatch active states
-  THEMES.forEach(t => {
-    const el = document.getElementById('swatch-' + t);
-    if (el) el.className = 'theme-swatch' + (t === name ? ' active' : '');
-  });
-  // Update meta theme-color for status bar
-  const colors = {
-    midnight: '#050D1E', oled: '#000000', slate: '#0D1117',
-    neon: '#05000F', desert: '#1C1A14', light: '#F0F4F8'
-  };
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', colors[name] || '#050D1E');
-}
-
-function loadTheme() {
-  const saved = load('st_theme', 'midnight');
-  setTheme(saved);
-}
-
 function exportCSV() {
   const trips = getTrips();
   if (!trips.length) { showToast('No trips to export'); return; }
@@ -1821,6 +1780,8 @@ function exportCSV() {
   URL.revokeObjectURL(url);
   setUnexported(0);
   updateExportBadge();
+  setUnexported(0);
+  updateExportBadge();
   showToast('Exported ' + trips.length + ' trips');
 }
  
@@ -1832,6 +1793,8 @@ function exportJSON() {
   const a = document.createElement('a');
   a.href = url; a.download = 'sparktrack.json'; a.click();
   URL.revokeObjectURL(url);
+  setUnexported(0);
+  updateExportBadge();
   setUnexported(0);
   updateExportBadge();
   showToast('Exported ' + trips.length + ' trips as JSON');
@@ -1897,49 +1860,72 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register(swURL).catch(() => {});
 }
 
+// ── THEMES ─────────────────────────────────────────
+const THEMES = ['midnight','oled','slate','neon','desert','light'];
+
+function setTheme(name) {
+  if (!THEMES.includes(name)) name = 'midnight';
+  document.documentElement.setAttribute('data-theme', name);
+  save('st_theme', name);
+  THEMES.forEach(t => {
+    const el = document.getElementById('swatch-' + t);
+    if (el) el.className = 'theme-swatch' + (t === name ? ' active' : '');
+  });
+  const colors = {
+    midnight: '#050D1E', oled: '#000000', slate: '#0D1117',
+    neon: '#05000F', desert: '#1C1A14', light: '#F0F4F8'
+  };
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', colors[name] || '#050D1E');
+}
+
+function loadTheme() {
+  const saved = load('st_theme', 'midnight');
+  setTheme(saved);
+}
+
 // ── ONBOARDING TOUR ────────────────────────────────
 const TOUR_STEPS = [
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z" fill="#FFD600" stroke="#FFD600" stroke-width="1" stroke-linejoin="round"/></svg>`,
-    iconBg: 'linear-gradient(135deg, #1A3A6B, #0A1E40)',
-    title: 'Welcome to SparkTrack ⚡',
-    desc: 'Your personal trip tracker for Spark deliveries. Track earnings, mileage, and gas costs — all in one place. Let's take a quick look around.'
+    icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z" fill="#FFD600" stroke="#FFD600" stroke-width="1" stroke-linejoin="round"/></svg>',
+    iconBg: "linear-gradient(135deg, #1A3A6B, #0A1E40)",
+    title: "Welcome to SparkTrack",
+    desc: "Your personal trip tracker for Spark deliveries. Track earnings, mileage, and gas costs — all in one place. Let us take a quick look around."
   },
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z"/></svg>`,
-    iconBg: 'rgba(0,212,255,0.12)',
-    title: 'Trip Tab',
-    desc: 'Start here when you accept an offer. Select your store, trip type, and odometer reading, then tap Accept Trip. Tap the action button as you move through each phase — At Store, Delivering, and Complete.'
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "Trip Tab",
+    desc: "Start here when you accept an offer. Select your store, trip type, and odometer reading, then tap Accept Trip. Tap the action button as you move through each phase — At Store, Delivering, and Complete."
   },
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>`,
-    iconBg: 'rgba(0,212,255,0.12)',
-    title: 'Evaluate Tab',
-    desc: 'Not sure if an offer is worth it? Enter the pay and miles before accepting. SparkTrack scores it instantly — under $1.00/mi is a pass, $2.00+ is a no-brainer. Shopping orders get a $3 time penalty applied automatically.'
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "Evaluate Tab",
+    desc: "Not sure if an offer is worth it? Enter the pay and miles before accepting. SparkTrack scores it instantly — under $1.00/mi is a pass, $2.00+ is a no-brainer. Shopping orders get a $3 time penalty applied automatically."
   },
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
-    iconBg: 'rgba(0,212,255,0.12)',
-    title: 'History Tab',
-    desc: 'Every completed trip lives here. See your total earned, average per trip, and tip rate at a glance. Filter by Pickup, Shopping, or Tipped trips to spot patterns in your earnings.'
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "History Tab",
+    desc: "Every completed trip lives here. See your total earned, average per trip, and tip rate at a glance. Filter by Pickup, Shopping, or Tipped trips to spot patterns in your earnings."
   },
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>`,
-    iconBg: 'rgba(0,212,255,0.12)',
-    title: 'Miles Tab',
-    desc: 'Tracks your total mileage and estimates your gas cost based on your MPG and current gas price. Miles are logged automatically from your odometer readings — no extra steps needed.'
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "Miles Tab",
+    desc: "Tracks your total mileage and estimates your gas cost based on your MPG and current gas price. Miles are logged automatically from your odometer readings — no extra steps needed."
   },
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l-.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>`,
-    iconBg: 'rgba(0,212,255,0.12)',
-    title: 'Settings Tab',
-    desc: 'Enter your MPG and gas price here so the app can calculate fuel costs. Export your trip data as CSV or JSON anytime. A green badge appears here after each trip reminding you to export. You can also change the app theme from here.'
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l-.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "Settings Tab",
+    desc: "Enter your MPG and gas price here so the app can calculate fuel costs. Export your trip data as CSV or JSON anytime. A green badge appears here after each trip reminding you to export. You can also change the app theme from here."
   },
   {
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>`,
-    iconBg: 'rgba(0,230,118,0.12)',
-    title: "You're all set!",
-    desc: 'SparkTrack saves everything automatically on your phone. No account needed, no data sent anywhere. Start by accepting your next offer and tapping Accept Trip. Happy driving! 🚗'
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>',
+    iconBg: "rgba(0,230,118,0.12)",
+    title: "You are all set!",
+    desc: "SparkTrack saves everything automatically on your phone. No account needed, no data sent anywhere. Start by accepting your next offer and tapping Accept Trip. Happy driving!"
   }
 ];
 
@@ -1954,28 +1940,17 @@ function startTour() {
 function renderTourStep() {
   const step = TOUR_STEPS[tourStep];
   const total = TOUR_STEPS.length;
-
-  // Dots
   document.getElementById('tour-dots').innerHTML = TOUR_STEPS.map((_, i) =>
-    `<div class="tour-dot${i === tourStep ? ' active' : ''}"></div>`
+    '<div class="tour-dot' + (i === tourStep ? ' active' : '') + '"></div>'
   ).join('');
-
-  // Icon
   const iconEl = document.getElementById('tour-icon');
   iconEl.innerHTML = step.icon;
   iconEl.style.background = step.iconBg;
-
-  // Text
   document.getElementById('tour-title').textContent = step.title;
   document.getElementById('tour-desc').textContent = step.desc;
-
-  // Button label
   const btn = document.getElementById('tour-btn');
-  btn.textContent = tourStep === total - 1 ? "Let's Go!" : 'Next';
-
-  // Hide skip on last step
-  document.getElementById('tour-skip').style.display =
-    tourStep === total - 1 ? 'none' : 'block';
+  btn.textContent = tourStep === total - 1 ? "Let us go!" : 'Next';
+  document.getElementById('tour-skip').style.display = tourStep === total - 1 ? 'none' : 'block';
 }
 
 function tourNext() {
@@ -1987,9 +1962,7 @@ function tourNext() {
   }
 }
 
-function skipTour() {
-  endTour();
-}
+function skipTour() { endTour(); }
 
 function endTour() {
   document.getElementById('tour-overlay').classList.remove('show');
@@ -1998,12 +1971,9 @@ function endTour() {
 
 function checkFirstLaunch() {
   const toured = load('st_toured', false);
-  if (!toured) {
-    setTimeout(startTour, 600);
-  }
+  if (!toured) setTimeout(startTour, 600);
 }
 
 </script>
 </body>
 </html>
- 
