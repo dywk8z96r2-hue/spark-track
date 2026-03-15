@@ -622,6 +622,96 @@
     50% { opacity: 0.5; }
   }
   .pulse { animation: pulse 2s infinite; }
+
+  /* ── THEMES ── */
+  [data-theme="midnight"] {
+    --bg: #050D1E; --bg2: #0D1E36; --bg3: #132540; --bg4: #1A3050;
+    --text: #E8F0FE; --text2: #A8C4E0; --text3: #6B8FAF;
+    --border: rgba(0,212,255,0.22);
+    --accent: #00D4FF; --accent2: #2979FF;
+    --cyan: #00D4FF; --blue: #2979FF;
+  }
+  [data-theme="oled"] {
+    --bg: #000000; --bg2: #0A0A0A; --bg3: #111111; --bg4: #1A1A1A;
+    --text: #FFFFFF; --text2: #CCCCCC; --text3: #777777;
+    --border: rgba(255,255,255,0.15);
+    --accent: #00D4FF; --accent2: #2979FF;
+    --cyan: #00D4FF; --blue: #2979FF;
+  }
+  [data-theme="slate"] {
+    --bg: #0D1117; --bg2: #161B22; --bg3: #1C2333; --bg4: #243044;
+    --text: #E6EDF3; --text2: #8B949E; --text3: #4D6070;
+    --border: rgba(139,148,158,0.2);
+    --accent: #58A6FF; --accent2: #388BFD;
+    --cyan: #58A6FF; --blue: #388BFD;
+  }
+  [data-theme="neon"] {
+    --bg: #05000F; --bg2: #0D0020; --bg3: #130030; --bg4: #1A0040;
+    --text: #F0E6FF; --text2: #C9A8FF; --text3: #7B5BA8;
+    --border: rgba(191,0,255,0.25);
+    --accent: #00FF9D; --accent2: #BF00FF;
+    --cyan: #00FF9D; --blue: #BF00FF;
+  }
+  [data-theme="desert"] {
+    --bg: #1C1A14; --bg2: #2A2720; --bg3: #35322A; --bg4: #424038;
+    --text: #F2ECD8; --text2: #C4B99A; --text3: #8A816A;
+    --border: rgba(180,168,140,0.22);
+    --accent: #7A9E5F; --accent2: #5C7A45;
+    --cyan: #7A9E5F; --blue: #5C7A45;
+  }
+  [data-theme="light"] {
+    --bg: #F0F4F8; --bg2: #FFFFFF; --bg3: #E8EEF4; --bg4: #D8E4EE;
+    --text: #1A2B3C; --text2: #4A6080; --text3: #8AA0B8;
+    --border: rgba(0,100,200,0.15);
+    --accent: #0088CC; --accent2: #0055AA;
+    --cyan: #0088CC; --blue: #0055AA;
+  }
+
+  /* ── THEME PICKER ── */
+  .theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .theme-swatch {
+    border-radius: 12px;
+    border: 2px solid transparent;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.15s;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 8px;
+    position: relative;
+  }
+  .theme-swatch.active { border-color: var(--cyan); }
+  .theme-swatch:active { transform: scale(0.95); }
+  .theme-swatch-name {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+  .theme-check {
+    position: absolute;
+    top: 6px; right: 6px;
+    width: 18px; height: 18px;
+    background: var(--cyan);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .theme-swatch.active .theme-check { display: flex; }
+  .theme-check svg { width: 10px; height: 10px; }
+
 </style>
 </head>
 <body>
@@ -631,11 +721,10 @@
   <div class="header">
     <div class="header-icon">
       <svg viewBox="0 0 24 24" fill="none">
-        <path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z" fill="#FF7A00" stroke="#FFD600" stroke-width="1" stroke-linejoin="round"/>
+        <path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z" fill="#FFD600" stroke="#FFD600" stroke-width="1" stroke-linejoin="round"/>
       </svg>
     </div>
     <span class="header-title">SparkTrack</span>
-    <span style="font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:rgba(255,122,0,0.2);color:var(--orange);border:1px solid rgba(255,122,0,0.4);border-radius:6px;padding:3px 7px;">BETA</span>
     <span class="header-subtitle" id="headerDate"></span>
   </div>
  
@@ -933,9 +1022,58 @@
         </button>
       </div>
  
-      <div class="card" style="text-align:center;">
+      <div class="card">
+        <div class="card-title">Appearance</div>
+        <div class="theme-grid" id="theme-grid">
+
+          <!-- Midnight -->
+          <div class="theme-swatch active" id="swatch-midnight" onclick="setTheme('midnight')"
+            style="background:linear-gradient(135deg,#050D1E,#0D1E36);">
+            <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="theme-swatch-name" style="color:#A8C4E0;">Midnight</span>
+          </div>
+
+          <!-- OLED -->
+          <div class="theme-swatch" id="swatch-oled" onclick="setTheme('oled')"
+            style="background:linear-gradient(135deg,#000000,#111111);">
+            <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="theme-swatch-name" style="color:#CCCCCC;">OLED</span>
+          </div>
+
+          <!-- Slate -->
+          <div class="theme-swatch" id="swatch-slate" onclick="setTheme('slate')"
+            style="background:linear-gradient(135deg,#0D1117,#1C2333);">
+            <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="theme-swatch-name" style="color:#8B949E;">Slate</span>
+          </div>
+
+          <!-- Neon -->
+          <div class="theme-swatch" id="swatch-neon" onclick="setTheme('neon')"
+            style="background:linear-gradient(135deg,#05000F,#130030);">
+            <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="theme-swatch-name" style="color:#00FF9D;">Neon</span>
+          </div>
+
+          <!-- Desert -->
+          <div class="theme-swatch" id="swatch-desert" onclick="setTheme('desert')"
+            style="background:linear-gradient(135deg,#1C1A14,#35322A);">
+            <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="theme-swatch-name" style="color:#C8A87A;">Desert</span>
+          </div>
+
+          <!-- Light -->
+          <div class="theme-swatch" id="swatch-light" onclick="setTheme('light')"
+            style="background:linear-gradient(135deg,#F0F4F8,#FFFFFF);">
+            <div class="theme-check"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <span class="theme-swatch-name" style="color:#4A6080;">Light</span>
+          </div>
+
+        </div>
+      </div>
+
+            <div class="card" style="text-align:center;">
         <div class="card-title" style="text-align:center;">SparkTrack</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 <span style="color:var(--orange);font-weight:800;">BETA</span> · El Paso, TX</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 · El Paso, TX</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;">⚡ Built for Spark Drivers</div>
       </div>
     </div>
@@ -1066,6 +1204,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderMiles();
   updateTripDot();
   updateExportBadge();
+  loadTheme();
 });
  
 // ── TABS ───────────────────────────────────────────
@@ -1501,6 +1640,31 @@ function saveSettings() {
   renderMiles();
 }
  
+// ── THEMES ─────────────────────────────────────────
+const THEMES = ['midnight','oled','slate','neon','desert','light'];
+
+function setTheme(name) {
+  if (!THEMES.includes(name)) name = 'midnight';
+  document.documentElement.setAttribute('data-theme', name);
+  save('st_theme', name);
+  // Update swatch active states
+  THEMES.forEach(t => {
+    const el = document.getElementById('swatch-' + t);
+    if (el) el.className = 'theme-swatch' + (t === name ? ' active' : '');
+  });
+  // Update meta theme-color for status bar
+  const colors = {
+    midnight: '#050D1E', oled: '#000000', slate: '#0D1117',
+    neon: '#05000F', desert: '#1C1A14', light: '#F0F4F8'
+  };
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', colors[name] || '#050D1E');
+}
+
+function loadTheme() {
+  const saved = load('st_theme', 'midnight');
+  setTheme(saved);
+}
+
 function exportCSV() {
   const trips = getTrips();
   if (!trips.length) { showToast('No trips to export'); return; }
@@ -1593,7 +1757,7 @@ const manifest = {
   background_color: '#050D1E',
   theme_color: '#050D1E',
   icons: [{
-    src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%23050D1E'/%3E%3Cpath d='M110 20L52 100H90L86 172L148 86H108L110 20Z' fill='%23FF7A00'/%3E%3C/svg%3E",
+    src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%23050D1E'/%3E%3Cpath d='M110 20L52 100H90L86 172L148 86H108L110 20Z' fill='%23FFD600'/%3E%3C/svg%3E",
     sizes: '192x192', type: 'image/svg+xml'
   }]
 };
@@ -1616,4 +1780,3 @@ if ('serviceWorker' in navigator) {
 </script>
 </body>
 </html>
- 
