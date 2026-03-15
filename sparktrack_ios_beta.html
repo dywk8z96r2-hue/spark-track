@@ -92,7 +92,6 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
     padding: 18px 18px calc(18px + var(--safe-bottom));
   }
   .content::-webkit-scrollbar { display: none; }
@@ -358,18 +357,6 @@
   .stat-value.orange { color: var(--orange); }
  
   /* ── EVALUATOR ── */
-  .rating-bar {
-    height: 6px;
-    border-radius: 3px;
-    background: var(--bg3);
-    overflow: hidden;
-    margin: 8px 0 4px;
-  }
-  .rating-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
-  }
   .rating-result {
     text-align: center;
     padding: 20px;
@@ -458,18 +445,6 @@
   .empty-title { font-family: var(--mono); font-size: 14px; font-weight: 700; margin-bottom: 6px; }
   .empty-sub { font-size: 13px; }
  
-  /* ── SECTION HEADER ── */
-  .section-header {
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin: 16px 0 8px;
-    padding: 0 2px;
-  }
-  .section-header:first-child { margin-top: 0; }
  
   /* ── STATS GRID ── */
   .stats-grid {
@@ -617,11 +592,6 @@
   }
   .filter-chip.active { background: var(--cyan); color: #000; border-color: var(--cyan); }
  
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-  .pulse { animation: pulse 2s infinite; }
 
   /* ── THEMES ── */
   [data-theme="midnight"] {
@@ -712,6 +682,73 @@
   .theme-swatch.active .theme-check { display: flex; }
   .theme-check svg { width: 10px; height: 10px; }
 
+
+  /* ── ONBOARDING TOUR ── */
+  .tour-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .tour-overlay.show { opacity: 1; pointer-events: all; }
+  .tour-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.85); }
+  .tour-card {
+    position: relative; z-index: 1;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 24px; padding: 28px 24px 24px;
+    width: calc(100% - 40px); max-width: 380px;
+    transform: translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+  }
+  .tour-overlay.show .tour-card { transform: translateY(0); }
+  .tour-step-indicator { display: flex; gap: 6px; justify-content: center; margin-bottom: 20px; }
+  .tour-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bg4); transition: all 0.2s; }
+  .tour-dot.active { width: 20px; border-radius: 3px; background: var(--cyan); }
+  .tour-icon {
+    width: 56px; height: 56px; border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; border: 1px solid var(--border);
+  }
+  .tour-icon svg { width: 28px; height: 28px; }
+  .tour-title {
+    font-family: var(--mono); font-size: 18px; font-weight: 800;
+    color: var(--text); text-align: center; margin-bottom: 10px; letter-spacing: -0.5px;
+  }
+  .tour-desc { font-size: 14px; color: var(--text2); text-align: center; line-height: 1.6; margin-bottom: 24px; }
+  .tour-btn {
+    width: 100%; padding: 15px; border-radius: 12px; border: none;
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    background: var(--cyan); color: #000; transition: transform 0.15s;
+  }
+  .tour-btn:active { transform: scale(0.97); }
+  .tour-skip {
+    width: 100%; padding: 12px; border: none; background: none;
+    font-family: var(--mono); font-size: 11px; font-weight: 600;
+    color: var(--text3); cursor: pointer; margin-top: 8px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .tour-tab-highlight {
+    position: relative;
+    z-index: 302;
+    background: var(--bg2);
+    border-radius: 8px;
+  }
+  .tour-tab-highlight::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 12px;
+    border: 2px solid var(--cyan);
+    box-shadow: 0 0 12px rgba(0,212,255,0.5), inset 0 0 8px rgba(0,212,255,0.1);
+    animation: tourPulse 1.2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 301;
+  }
+  @keyframes tourPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(0,212,255,0.5), inset 0 0 8px rgba(0,212,255,0.1); }
+    50% { opacity: 0.6; box-shadow: 0 0 20px rgba(0,212,255,0.8), inset 0 0 12px rgba(0,212,255,0.2); }
+  }
+
 </style>
 </head>
 <body>
@@ -725,6 +762,7 @@
       </svg>
     </div>
     <span class="header-title">SparkTrack</span>
+    <span style="font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:rgba(255,122,0,0.2);color:var(--orange);border:1px solid rgba(255,122,0,0.4);border-radius:6px;padding:3px 7px;">BETA</span>
     <span class="header-subtitle" id="headerDate"></span>
   </div>
  
@@ -777,7 +815,7 @@
           </div>
           <button class="btn btn-cyan" onclick="startTrip()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            Accept Trip
+            Start Trip
           </button>
         </div>
       </div>
@@ -1073,7 +1111,7 @@
 
             <div class="card" style="text-align:center;">
         <div class="card-title" style="text-align:center;">SparkTrack</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 · El Paso, TX</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 <span style="color:var(--orange);font-weight:800;">BETA</span> · El Paso, TX</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;">⚡ Built for Spark Drivers</div>
       </div>
     </div>
@@ -1154,6 +1192,20 @@
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
  
+
+<!-- ONBOARDING TOUR -->
+<div class="tour-overlay" id="tour-overlay">
+  <div class="tour-backdrop" onclick="skipTour()"></div>
+  <div class="tour-card">
+    <div class="tour-step-indicator" id="tour-dots"></div>
+    <div class="tour-icon" id="tour-icon"></div>
+    <div class="tour-title" id="tour-title"></div>
+    <div class="tour-desc" id="tour-desc"></div>
+    <button class="tour-btn" id="tour-btn" onclick="tourNext()"></button>
+    <button class="tour-skip" id="tour-skip" onclick="skipTour()">Skip Tour</button>
+  </div>
+</div>
+
 <script>
 // ── STATE ──────────────────────────────────────────
 let activeTrip = null;
@@ -1205,6 +1257,7 @@ window.addEventListener('DOMContentLoaded', () => {
   updateTripDot();
   updateExportBadge();
   loadTheme();
+  checkFirstLaunch();
 });
  
 // ── TABS ───────────────────────────────────────────
@@ -1283,8 +1336,8 @@ function updateActiveTripUI() {
   document.getElementById('conn-2').className = 'phase-connector' + (phaseIdx > 1 ? ' done' : '');
  
   // Timer label
-  const labels2 = { accepted: 'Time since accepted', atStore: 'Time at store', delivering: 'Time delivering' };
-  document.getElementById('timer-label').textContent = labels2[phase] || 'Elapsed';
+  const phaseTimerLabels = { accepted: 'Time since accepted', atStore: 'Time at store', delivering: 'Time delivering' };
+  document.getElementById('timer-label').textContent = phaseTimerLabels[phase] || 'Elapsed';
  
   // Action button
   const btn = document.getElementById('trip-action-btn');
@@ -1299,7 +1352,7 @@ function updateActiveTripUI() {
       Picked Up — Delivering
     </button>`;
   } else if (phase === 'delivering') {
-    btn.innerHTML = `<button class="btn btn-green" onclick="completeTrip()">
+    btn.innerHTML = `<button class="btn btn-green" onclick="openCompleteModal()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="18" height="18"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
       Mark Complete
     </button>`;
@@ -1319,10 +1372,6 @@ function advancePhase() {
   }
   save('st_active', activeTrip);
   updateActiveTripUI();
-}
- 
-function completeTrip() {
-  openCompleteModal();
 }
  
 function openCompleteModal() {
@@ -1473,11 +1522,11 @@ function evaluateOffer() {
   const perHr = time > 0 ? (pay / (time / 60)) : null;
  
   // Rating
-  let color, label, verdict, pct;
-  if (perMile < 1.0) { color = '#FF4444'; label = 'PASS'; verdict = 'Below $1.00/mi — not worth it'; pct = (perMile / 1.0) * 33; }
-  else if (perMile < 1.5) { color = '#FFD600'; label = 'BORDERLINE'; verdict = 'Okay if you need the activity'; pct = 33 + ((perMile - 1.0) / 0.5) * 33; }
-  else if (perMile < 2.0) { color = '#00D4FF'; label = 'GOOD'; verdict = 'Solid offer — take it'; pct = 66 + ((perMile - 1.5) / 0.5) * 17; }
-  else { color = '#00E676'; label = 'TAKE IT'; verdict = 'Excellent offer — go!'; pct = 100; }
+  let color, label, verdict;
+  if (perMile < 1.0) { color = '#FF4444'; label = 'PASS'; verdict = 'Below $1.00/mi — not worth it'; }
+  else if (perMile < 1.5) { color = '#FFD600'; label = 'BORDERLINE'; verdict = 'Okay if you need the activity'; }
+  else if (perMile < 2.0) { color = '#00D4FF'; label = 'GOOD'; verdict = 'Solid offer — take it'; }
+  else { color = '#00E676'; label = 'TAKE IT'; verdict = 'Excellent offer — go!'; }
  
   document.getElementById('eval-result').style.display = 'block';
  
@@ -1777,6 +1826,106 @@ if ('serviceWorker' in navigator) {
   const swURL = URL.createObjectURL(swBlob);
   navigator.serviceWorker.register(swURL).catch(() => {});
 }
+
+// ── ONBOARDING TOUR ────────────────────────────────
+const TOUR_STEPS = [
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z" fill="#FFD600" stroke="#FFD600" stroke-width="1" stroke-linejoin="round"/></svg>',
+    iconBg: "linear-gradient(135deg, #1A3A6B, #0A1E40)",
+    title: "Welcome to SparkTrack",
+    desc: "Your personal trip tracker for Spark deliveries. Track earnings, mileage, and gas costs - all in one place. Let us take a quick look around."
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "Trip Tab",
+    desc: "Start here when you accept an offer. Select your store, trip type, and odometer reading, then tap Accept Trip. Tap the action button as you move through each phase - At Store, Delivering, and Complete."
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "Evaluate Tab",
+    desc: "Not sure if an offer is worth it? Enter the pay and miles before accepting. SparkTrack scores it instantly - under $1.00/mi is a pass, $2.00+ is a no-brainer. Shopping orders get a $3 time penalty applied automatically."
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "History Tab",
+    desc: "Every completed trip lives here. See your total earned, average per trip, and tip rate at a glance. Filter by Pickup, Shopping, or Tipped trips to spot patterns in your earnings."
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "Miles Tab",
+    desc: "Tracks your total mileage and estimates your gas cost based on your MPG and current gas price. Miles are logged automatically from your odometer readings - no extra steps needed."
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l-.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
+    iconBg: "rgba(0,212,255,0.12)",
+    title: "Settings Tab",
+    desc: "Enter your MPG and gas price here so the app can calculate fuel costs. Export your trip data as CSV or JSON anytime. A green badge appears here after each trip reminding you to export. You can also change the app theme from here."
+  },
+  {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>',
+    iconBg: "rgba(0,230,118,0.12)",
+    title: "You are all set!",
+    desc: "SparkTrack saves everything automatically on your phone. No account needed, no data sent anywhere. Start by accepting your next offer and tapping Accept Trip. Happy driving!"
+  }
+];
+
+let tourStep = 0;
+
+function startTour() {
+  tourStep = 0;
+  renderTourStep();
+  document.getElementById('tour-overlay').classList.add('show');
+}
+
+// step index -> tab id (null = no tab highlighted)
+const TOUR_TAB_MAP = [null, 'trip', 'evaluate', 'history', 'miles', 'settings', null];
+
+function highlightTourTab(tabId) {
+  // Remove highlight from all tabs first
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('tour-tab-highlight'));
+  if (tabId) {
+    const el = document.getElementById('tab-' + tabId);
+    if (el) el.classList.add('tour-tab-highlight');
+  }
+}
+
+function renderTourStep() {
+  const step = TOUR_STEPS[tourStep];
+  const total = TOUR_STEPS.length;
+  document.getElementById('tour-dots').innerHTML = TOUR_STEPS.map((_, i) =>
+    '<div class="tour-dot' + (i === tourStep ? ' active' : '') + '"></div>'
+  ).join('');
+  const iconEl = document.getElementById('tour-icon');
+  iconEl.innerHTML = step.icon;
+  iconEl.style.background = step.iconBg;
+  document.getElementById('tour-title').textContent = step.title;
+  document.getElementById('tour-desc').textContent = step.desc;
+  document.getElementById('tour-btn').textContent = tourStep === total - 1 ? "Hit the Road!" : 'Next';
+  document.getElementById('tour-skip').style.display = tourStep === total - 1 ? 'none' : 'block';
+  highlightTourTab(TOUR_TAB_MAP[tourStep]);
+}
+
+function tourNext() {
+  if (tourStep < TOUR_STEPS.length - 1) { tourStep++; renderTourStep(); }
+  else endTour();
+}
+
+function skipTour() { endTour(); }
+
+function endTour() {
+  document.getElementById('tour-overlay').classList.remove('show');
+  highlightTourTab(null);
+  save('st_toured', true);
+}
+
+function checkFirstLaunch() {
+  if (!load('st_toured', false)) setTimeout(startTour, 600);
+}
+
 </script>
 </body>
 </html>
