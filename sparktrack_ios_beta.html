@@ -199,7 +199,6 @@
   .phase-steps {
     display: flex;
     align-items: center;
-    gap: 0;
     margin: 16px 0;
   }
   .phase-step {
@@ -304,8 +303,8 @@
     -webkit-appearance: none;
   }
   .form-input:focus { border-color: var(--cyan); }
-.form-input::placeholder { color: #4A6A8A; opacity: 1; }
-.form-select:focus { border-color: var(--cyan); }
+  .form-input::placeholder { color: #4A6A8A; opacity: 1; }
+  .form-select:focus { border-color: var(--cyan); }
   .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237B9CC4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
  
   /* ── TOGGLE ── */
@@ -598,42 +597,36 @@
     --bg: #050D1E; --bg2: #0D1E36; --bg3: #132540; --bg4: #1A3050;
     --text: #E8F0FE; --text2: #A8C4E0; --text3: #6B8FAF;
     --border: rgba(0,212,255,0.22);
-    --accent: #00D4FF; --accent2: #2979FF;
     --cyan: #00D4FF; --blue: #2979FF;
   }
   [data-theme="oled"] {
     --bg: #000000; --bg2: #0A0A0A; --bg3: #111111; --bg4: #1A1A1A;
     --text: #FFFFFF; --text2: #CCCCCC; --text3: #777777;
     --border: rgba(255,255,255,0.15);
-    --accent: #00D4FF; --accent2: #2979FF;
     --cyan: #00D4FF; --blue: #2979FF;
   }
   [data-theme="slate"] {
     --bg: #0D1117; --bg2: #161B22; --bg3: #1C2333; --bg4: #243044;
     --text: #E6EDF3; --text2: #8B949E; --text3: #4D6070;
     --border: rgba(139,148,158,0.2);
-    --accent: #58A6FF; --accent2: #388BFD;
     --cyan: #58A6FF; --blue: #388BFD;
   }
   [data-theme="neon"] {
     --bg: #05000F; --bg2: #0D0020; --bg3: #130030; --bg4: #1A0040;
     --text: #F0E6FF; --text2: #C9A8FF; --text3: #7B5BA8;
     --border: rgba(191,0,255,0.25);
-    --accent: #00FF9D; --accent2: #BF00FF;
     --cyan: #00FF9D; --blue: #BF00FF;
   }
   [data-theme="desert"] {
     --bg: #1C1A14; --bg2: #2A2720; --bg3: #35322A; --bg4: #424038;
     --text: #F2ECD8; --text2: #C4B99A; --text3: #8A816A;
     --border: rgba(180,168,140,0.22);
-    --accent: #7A9E5F; --accent2: #5C7A45;
     --cyan: #7A9E5F; --blue: #5C7A45;
   }
   [data-theme="light"] {
     --bg: #F0F4F8; --bg2: #FFFFFF; --bg3: #E8EEF4; --bg4: #D8E4EE;
     --text: #1A2B3C; --text2: #4A6080; --text3: #8AA0B8;
     --border: rgba(0,100,200,0.15);
-    --accent: #0088CC; --accent2: #0055AA;
     --cyan: #0088CC; --blue: #0055AA;
   }
 
@@ -748,6 +741,44 @@
     0%, 100% { opacity: 1; box-shadow: 0 0 12px rgba(0,212,255,0.5), inset 0 0 8px rgba(0,212,255,0.1); }
     50% { opacity: 0.6; box-shadow: 0 0 20px rgba(0,212,255,0.8), inset 0 0 12px rgba(0,212,255,0.2); }
   }
+  /* ── BETA BADGE ── */
+  .badge-beta {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(255,122,0,0.2);
+    color: var(--orange);
+    border: 1px solid rgba(255,122,0,0.4);
+    border-radius: 6px;
+    padding: 3px 7px;
+  }
+
+  /* ── MODAL STAT ROW ── */
+  .modal-stat-display {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+  .modal-stat-value {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cyan);
+  }
 
 </style>
 </head>
@@ -762,7 +793,7 @@
       </svg>
     </div>
     <span class="header-title">SparkTrack</span>
-    <span style="font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;background:rgba(255,122,0,0.2);color:var(--orange);border:1px solid rgba(255,122,0,0.4);border-radius:6px;padding:3px 7px;">BETA</span>
+    <span class="badge-beta">BETA</span>
     <span class="header-subtitle" id="headerDate"></span>
   </div>
  
@@ -1169,13 +1200,13 @@
       <label class="form-label">Odometer End</label>
       <input class="form-input" type="number" id="comp-odometer-end" inputmode="numeric" placeholder="e.g. 42368" step="1" min="0" oninput="calcMilesDriven()">
     </div>
-    <div class="form-group" id="comp-miles-display" style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
-      <span style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);">Miles Driven</span>
-      <span style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--cyan);" id="comp-miles-val">—</span>
+    <div class="form-group modal-stat-display" id="comp-miles-display">
+      <span class="modal-stat-label">Miles Driven</span>
+      <span class="modal-stat-value" id="comp-miles-val">—</span>
     </div>
-    <div class="form-group" id="comp-elapsed-display" style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
-      <span style="font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);">Elapsed Time</span>
-      <span style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--cyan);" id="comp-elapsed-val">—</span>
+    <div class="form-group modal-stat-display" id="comp-elapsed-display">
+      <span class="modal-stat-label">Elapsed Time</span>
+      <span class="modal-stat-value" id="comp-elapsed-val">—</span>
     </div>
     <div class="form-group">
       <label class="form-label">Notes (optional)</label>
@@ -1240,8 +1271,7 @@ function updateExportBadge() {
 // ── INIT ───────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   // Header date
-  document.getElementById('headerDate').textContent =
-    new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  document.getElementById('headerDate').textContent = fmtDate(Date.now());
  
   // Restore active trip
   activeTrip = load('st_active', null);
@@ -1273,8 +1303,7 @@ function switchTab(tab) {
 // ── TRIP ───────────────────────────────────────────
 function setTripType(type) {
   currentTripType = type;
-  document.getElementById('type-pickup').className = 'toggle-btn' + (type === 'Pickup' ? ' active-pickup' : '');
-  document.getElementById('type-shopping').className = 'toggle-btn' + (type === 'Shopping' ? ' active-shopping' : '');
+  updateToggleBtns('type-', type);
 }
  
 function startTrip() {
@@ -1299,8 +1328,7 @@ function startTrip() {
 }
  
 function showActiveTrip() {
-  document.getElementById('no-trip-view').style.display = 'none';
-  document.getElementById('active-trip-view').style.display = 'block';
+  setTripViewState(true);
   updateActiveTripUI();
   startTimer();
   updateTripDot();
@@ -1314,7 +1342,7 @@ function updateActiveTripUI() {
   document.getElementById('at-trip-meta').textContent =
     activeTrip.tripType + ' · ' + activeTrip.stops + (activeTrip.stops === 1 ? ' stop' : ' stops');
   document.getElementById('at-phase-badge').innerHTML = phaseBadgeHTML(phase);
-  document.getElementById('detail-store').textContent = activeTrip.storeName.replace('Walmart ', '').replace("Sam's Club ", "Sam's #");
+  document.getElementById('detail-store').textContent = shortStoreName(activeTrip.storeName);
   document.getElementById('detail-type').textContent = activeTrip.tripType;
   document.getElementById('detail-stops').textContent = activeTrip.stops;
   document.getElementById('detail-started').textContent = fmtTime(activeTrip.acceptedAt);
@@ -1448,10 +1476,9 @@ function saveComplete() {
   activeTrip = null;
   save('st_active', null);
   clearInterval(timerInterval);
- 
+
   closeCompleteModal();
-  document.getElementById('active-trip-view').style.display = 'none';
-  document.getElementById('no-trip-view').style.display = 'block';
+  setTripViewState(false);
   updateTripDot();
  
   // Reset form
@@ -1471,8 +1498,7 @@ function cancelTrip() {
   activeTrip = null;
   save('st_active', null);
   clearInterval(timerInterval);
-  document.getElementById('active-trip-view').style.display = 'none';
-  document.getElementById('no-trip-view').style.display = 'block';
+  setTripViewState(false);
   updateTripDot();
   showToast('Trip cancelled');
 }
@@ -1504,8 +1530,7 @@ function updateTripDot() {
 // ── EVALUATE ───────────────────────────────────────
 function setEvalType(type) {
   currentEvalType = type;
-  document.getElementById('eval-type-pickup').className = 'toggle-btn' + (type === 'Pickup' ? ' active-pickup' : '');
-  document.getElementById('eval-type-shopping').className = 'toggle-btn' + (type === 'Shopping' ? ' active-shopping' : '');
+  updateToggleBtns('eval-type-', type);
   evaluateOffer();
 }
  
@@ -1613,7 +1638,7 @@ function renderHistory() {
     return `<div class="trip-item">
       ${icon}
       <div class="trip-item-body">
-        <div class="trip-item-store">${t.storeName.replace('Walmart ','').replace("Sam's Club ","Sam's ")}</div>
+        <div class="trip-item-store">${shortStoreName(t.storeName)}</div>
         <div class="trip-item-meta">${meta}</div>
       </div>
       <div>
@@ -1667,7 +1692,7 @@ function renderMiles() {
   }
   listEl.innerHTML = log.slice(0, 20).map(e => `
     <div class="stat-row">
-      <span class="stat-label">${fmtDate(e.date)} · ${e.store.replace('Walmart ','').substring(0,18)}</span>
+      <span class="stat-label">${fmtDate(e.date)} · ${shortStoreName(e.store).substring(0,18)}</span>
       <span class="stat-value cyan">${e.miles.toFixed(1)} mi</span>
     </div>
   `).join('');
@@ -1744,27 +1769,13 @@ function exportCSV() {
     '"' + (t.notes||'') + '"'
   ].join(','));
   const csv = [header, ...rows].join('\n');
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'sparktrack.csv'; a.click();
-  URL.revokeObjectURL(url);
-  setUnexported(0);
-  updateExportBadge();
-  showToast('Exported ' + trips.length + ' trips');
+  triggerDownload(new Blob([csv], { type: 'text/csv' }), 'sparktrack.csv', 'Exported ' + trips.length + ' trips');
 }
  
 function exportJSON() {
   const trips = getTrips();
   if (!trips.length) { showToast('No trips to export'); return; }
-  const blob = new Blob([JSON.stringify(trips, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'sparktrack.json'; a.click();
-  URL.revokeObjectURL(url);
-  setUnexported(0);
-  updateExportBadge();
-  showToast('Exported ' + trips.length + ' trips as JSON');
+  triggerDownload(new Blob([JSON.stringify(trips, null, 2)], { type: 'application/json' }), 'sparktrack.json', 'Exported ' + trips.length + ' trips as JSON');
 }
  
 function confirmClear() {
@@ -1781,20 +1792,47 @@ function phaseBadgeHTML(phase) {
   const names = { accepted: 'Accepted', atStore: 'At Store', delivering: 'Delivering', complete: 'Complete' };
   return `<span class="phase-badge ${phase}">${names[phase] || phase}</span>`;
 }
- 
+
 function fmtTime(ts) {
   return new Date(ts).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
 }
- 
+
 function fmtDate(ts) {
   return new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
- 
+
+function shortStoreName(name) {
+  return name.replace('Walmart ', '').replace("Sam's Club ", "Sam's #");
+}
+
 function showToast(msg) {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// Shared toggle-button state helper (used by trip type + eval type)
+function updateToggleBtns(prefix, type) {
+  document.getElementById(prefix + 'pickup').className = 'toggle-btn' + (type === 'Pickup' ? ' active-pickup' : '');
+  document.getElementById(prefix + 'shopping').className = 'toggle-btn' + (type === 'Shopping' ? ' active-shopping' : '');
+}
+
+// Show/hide active vs no-trip panels
+function setTripViewState(active) {
+  document.getElementById('no-trip-view').style.display = active ? 'none' : 'block';
+  document.getElementById('active-trip-view').style.display = active ? 'block' : 'none';
+}
+
+// Shared download trigger for CSV/JSON export
+function triggerDownload(blob, filename, toastMsg) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  setUnexported(0);
+  updateExportBadge();
+  showToast(toastMsg);
 }
  
 // ── PWA MANIFEST (inline) ──────────────────────────
@@ -1914,7 +1952,7 @@ function tourNext() {
   else endTour();
 }
 
-function skipTour() { endTour(); }
+const skipTour = endTour;
 
 function endTour() {
   document.getElementById('tour-overlay').classList.remove('show');
