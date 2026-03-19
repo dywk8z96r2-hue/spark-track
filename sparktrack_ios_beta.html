@@ -780,6 +780,53 @@
     color: var(--cyan);
   }
 
+
+  /* ── STORE MANAGER ── */
+  .store-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .store-list-item:last-child { border-bottom: none; }
+  .store-list-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .store-remove-btn {
+    background: none;
+    border: none;
+    color: var(--red);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 16px;
+    line-height: 1;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  .store-remove-btn:active { opacity: 1; }
+  .store-add-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .store-add-row .form-input { flex: 1; font-size: 14px; }
+  .store-add-btn {
+    background: var(--cyan);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 0 16px;
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
 </style>
 </head>
 <body>
@@ -808,15 +855,7 @@
           <div class="form-group">
             <label class="form-label">Store</label>
             <select class="form-select" id="trip-store">
-              <option value="Walmart EL PASO #3763">Walmart EL PASO #3763</option>
-              <option value="Walmart EL PASO #2612">Walmart EL PASO #2612</option>
-              <option value="Walmart EL PASO #2201">Walmart EL PASO #2201</option>
-              <option value="Walmart EL PASO #512">Walmart EL PASO #512</option>
-              <option value="Walmart EL PASO #964">Walmart EL PASO #964</option>
-              <option value="Walmart EL PASO #6813">Walmart EL PASO #6813</option>
-              <option value="Walmart Horizon City #3136">Walmart Horizon City #3136</option>
-              <option value="Sam's Club #6502">Sam's Club #6502</option>
-              <option value="Sam's Club #8280">Sam's Club #8280</option>
+              <option value="" disabled selected>Select a store...</option>
             </select>
           </div>
           <div class="form-group">
@@ -1092,6 +1131,17 @@
       </div>
  
       <div class="card">
+        <div class="card-title">My Stores</div>
+        <div id="store-list-items">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text3);padding:8px 0;">No stores added yet. Add your local Walmart or Sam's Club below.</div>
+        </div>
+        <div class="store-add-row">
+          <input class="form-input" type="text" id="store-name-input" placeholder="e.g. Walmart #3763" autocomplete="off">
+          <button class="store-add-btn" onclick="addStore()">+</button>
+        </div>
+      </div>
+
+            <div class="card">
         <div class="card-title">Appearance</div>
         <div class="theme-grid" id="theme-grid">
 
@@ -1142,7 +1192,7 @@
 
             <div class="card" style="text-align:center;">
         <div class="card-title" style="text-align:center;">SparkTrack</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 <span style="color:var(--orange);font-weight:800;">BETA</span> · El Paso, TX</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 · For Spark Drivers</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;">⚡ Built for Spark Drivers</div>
       </div>
     </div>
@@ -1287,6 +1337,8 @@ window.addEventListener('DOMContentLoaded', () => {
   updateTripDot();
   updateExportBadge();
   loadTheme();
+  renderStoreList();
+  renderStoreDropdown();
   checkFirstLaunch();
 });
  
@@ -1714,6 +1766,60 @@ function saveSettings() {
   renderMiles();
 }
  
+// ── STORES ─────────────────────────────────────────
+function getStores() { return load('st_stores', []); }
+function saveStores(s) { save('st_stores', s); }
+
+function addStore() {
+  const input = document.getElementById('store-name-input');
+  const name = input.value.trim();
+  if (!name) { showToast('Enter a store name'); return; }
+  const stores = getStores();
+  if (stores.includes(name)) { showToast('Store already added'); return; }
+  stores.push(name);
+  saveStores(stores);
+  input.value = '';
+  renderStoreList();
+  renderStoreDropdown();
+  showToast('Store added');
+}
+
+function removeStore(name) {
+  const stores = getStores().filter(s => s !== name);
+  saveStores(stores);
+  renderStoreList();
+  renderStoreDropdown();
+  showToast('Store removed');
+}
+
+function renderStoreList() {
+  const stores = getStores();
+  const el = document.getElementById('store-list-items');
+  if (!el) return;
+  if (!stores.length) {
+    el.innerHTML = '<div style="font-family:var(--mono);font-size:11px;color:var(--text3);padding:8px 0;">No stores added yet. Add your local Walmart or Sam's Club below.</div>';
+    return;
+  }
+  el.innerHTML = stores.map(s => `
+    <div class="store-list-item">
+      <span class="store-list-name">${s}</span>
+      <button class="store-remove-btn" onclick="removeStore('${s.replace(/'/g, "\'")}')">&#x2715;</button>
+    </div>
+  `).join('');
+}
+
+function renderStoreDropdown() {
+  const stores = getStores();
+  const sel = document.getElementById('trip-store');
+  if (!sel) return;
+  const current = sel.value;
+  sel.innerHTML = stores.length
+    ? stores.map(s => `<option value="${s}">${s}</option>`).join('')
+    : '<option value="" disabled selected>Add stores in Settings first</option>';
+  // Restore selection if still valid
+  if (stores.includes(current)) sel.value = current;
+}
+
 // ── THEMES ─────────────────────────────────────────
 const THEMES = ['midnight','oled','slate','neon','desert','light'];
 
@@ -1802,7 +1908,12 @@ function fmtDate(ts) {
 }
 
 function shortStoreName(name) {
-  return name.replace('Walmart ', '').replace("Sam's Club ", "Sam's #");
+  if (!name) return '';
+  // Shorten common prefixes for display
+  return name
+    .replace(/^Walmart Supercenter /i, 'Walmart ')
+    .replace(/^Walmart Neighborhood Market /i, 'Walmart NM ')
+    .replace(/^Sam\'s Club /i, "Sam's ");
 }
 
 function showToast(msg) {
@@ -1877,7 +1988,7 @@ const TOUR_STEPS = [
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z"/></svg>',
     iconBg: "rgba(0,212,255,0.12)",
     title: "Trip Tab",
-    desc: "Start here when you accept an offer. Select your store, trip type, and odometer reading, then tap Accept Trip. Tap the action button as you move through each phase - At Store, Delivering, and Complete."
+    desc: "Start here when you accept an offer. Select your store, trip type, and odometer reading, then tap Accept Trip. Add your stores first in the Settings tab. Tap the action button as you move through each phase - At Store, Delivering, and Complete."
   },
   {
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
@@ -1901,7 +2012,7 @@ const TOUR_STEPS = [
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l-.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
     iconBg: "rgba(0,212,255,0.12)",
     title: "Settings Tab",
-    desc: "Enter your MPG and gas price here so the app can calculate fuel costs. Export your trip data as CSV or JSON anytime. A green badge appears here after each trip reminding you to export. You can also change the app theme from here."
+    desc: "Add your local Walmart and Sam's Club stores here so they appear in the trip form. Enter your MPG and gas price for fuel cost tracking. Export your data as CSV or JSON anytime. A green badge appears after each trip reminding you to export."
   },
   {
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>',
