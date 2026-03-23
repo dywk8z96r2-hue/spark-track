@@ -11,7 +11,6 @@ The link auto-detects your device and opens the correct version automatically.
 ## Features
 
 - **Trip tracking** — log each phase of your trip (Accepted → At Store → Delivering → Complete) with a live timer
-- **Offer evaluator** — score any offer by $/mile before you accept it, with a shopping penalty applied automatically
 - **Earnings history** — view all past trips with total earned, avg per trip, and tip rate stats
 - **Mileage & gas tracker** — log odometer readings per trip, calculates miles driven and estimated gas cost based on your MPG and current gas price
 - **Data export** — export all trip data as a CSV (spreadsheet) or JSON file at any time
