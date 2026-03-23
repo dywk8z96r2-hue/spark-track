@@ -1161,14 +1161,14 @@
 
       <div class="card">
         <div class="card-title">Contact</div>
-        <a class="contact-link" href="/cdn-cgi/l/email-protection#03696c6272766a6d676f6b43646e626a6f2d606c6e">
+        <div class="contact-link" onclick="openEmail()" style="cursor:pointer;">
           <div class="contact-link-icon" style="background:rgba(0,212,255,0.12);">✉️</div>
           <div class="contact-link-body">
             <div class="contact-link-title">Send a Message</div>
-            <div class="contact-link-sub"><span class="__cf_email__" data-cfemail="6a00050b1b1f03040e06022a0d070b030644090507">[email&#160;protected]</span></div>
+            <div class="contact-link-sub">joaquindlh [at] gmail.com</div>
           </div>
           <div class="contact-link-arrow">›</div>
-        </a>
+        </div>
       </div>
 
       <div class="card">
@@ -1306,7 +1306,7 @@
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // ── STATE ──────────────────────────────────────────
 let activeTrip = null;
 let timerInterval = null;
@@ -1861,6 +1861,12 @@ function fmtTime(ts) {
 
 function fmtDate(ts) {
   return new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function openEmail() {
+  const u = 'joaquindlh';
+  const d = 'gmail.com';
+  window.location.href = 'mailto:' + u + '@' + d;
 }
 
 function shortStoreName(name) {
