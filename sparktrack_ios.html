@@ -354,36 +354,7 @@
   .stat-value.green { color: var(--green); }
   .stat-value.cyan { color: var(--cyan); }
   .stat-value.orange { color: var(--orange); }
- 
-  /* ── EVALUATOR ── */
-  .rating-result {
-    text-align: center;
-    padding: 20px;
-    border-radius: 14px;
-    margin-top: 12px;
-    border: 1px solid;
-    transition: all 0.3s;
-  }
-  .rating-score {
-    font-family: var(--mono);
-    font-size: 52px;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -2px;
-  }
-  .rating-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-  .rating-verdict {
-    font-size: 13px;
-    margin-top: 8px;
-    color: var(--text2);
-  }
+
  
   /* ── TRIP LIST ── */
   .trip-item {
@@ -766,6 +737,104 @@
     font-weight: 700;
     color: var(--cyan);
   }
+  /* ── STORE MANAGER ── */
+  .store-list-item {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .store-list-item:last-child { border-bottom: none; }
+  .store-list-name { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--text); }
+  .store-remove-btn {
+    background: none; border: none; color: var(--red);
+    cursor: pointer; padding: 4px 8px; font-size: 16px;
+    line-height: 1; opacity: 0.7; flex-shrink: 0;
+  }
+  .store-remove-btn:active { opacity: 1; }
+  .store-add-row { display: flex; gap: 8px; margin-top: 10px; }
+  .store-add-row .form-input { flex: 1; font-size: 14px; }
+  .store-add-btn {
+    background: var(--cyan); color: #000; border: none;
+    border-radius: 10px; padding: 0 18px;
+    font-family: var(--mono); font-size: 20px; font-weight: 800;
+    cursor: pointer; flex-shrink: 0;
+  }
+
+  /* ── CONTACT / DONATE ── */
+  .contact-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+    text-decoration: none; cursor: pointer;
+    background: none; border-left: none; border-right: none; border-top: none;
+    width: 100%;
+  }
+  .contact-link:last-child { border-bottom: none; }
+  .contact-link-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 18px;
+  }
+  .contact-link-body { flex: 1; text-align: left; }
+  .contact-link-title { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); }
+  .contact-link-sub { font-family: var(--mono); font-size: 10px; color: var(--text3); margin-top: 2px; }
+  .contact-link-arrow { font-size: 14px; color: var(--text3); }
+  .donate-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .donate-btn {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px; padding: 12px 8px;
+    border-radius: 12px; border: 1px solid var(--border);
+    background: var(--bg3); cursor: pointer; text-decoration: none;
+    transition: all 0.15s;
+  }
+  .donate-btn:active { transform: scale(0.96); }
+  .donate-btn-icon { font-size: 22px; }
+  .donate-btn-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text2); }
+
+
+  /* ── TRIP DETAIL POPUP ── */
+  .trip-detail-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 0; border-bottom: 1px solid var(--border);
+  }
+  .trip-detail-row:last-child { border-bottom: none; }
+  .trip-detail-label { font-family: var(--mono); font-size: 11px; color: var(--text2); }
+  .trip-detail-value { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); text-align: right; }
+  .trip-item { cursor: pointer; transition: opacity 0.15s; }
+  .trip-item:active { opacity: 0.7; }
+
+
+  /* ── HEADER ONLINE BUTTON ── */
+  .header-online-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(107,143,175,0.4);
+    background: rgba(107,143,175,0.1);
+    color: var(--text3);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: 10px;
+  }
+  .header-online-btn.is-online {
+    border-color: rgba(0,230,118,0.5);
+    background: rgba(0,230,118,0.12);
+    color: var(--green);
+  }
+  .header-online-btn .online-indicator {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+  }
 
 </style>
 </head>
@@ -780,30 +849,25 @@
       </svg>
     </div>
     <span class="header-title">SparkTrack</span>
+    <button class="header-online-btn" id="banner-btn" onclick="toggleOnline()">
+      <div class="online-indicator" id="banner-indicator" style="background:var(--text3);box-shadow:none;animation:none;"></div>
+      <span id="banner-title">Go Online</span>
+      <span id="online-banner-timer" style="display:none;font-size:10px;opacity:0.8;"></span>
+    </button>
     <span class="header-subtitle" id="headerDate"></span>
   </div>
- 
+
   <!-- CONTENT -->
   <div class="content">
  
     <!-- TRIP VIEW -->
     <div class="view active" id="view-trip">
       <div id="no-trip-view">
-        <div class="card">
+        <div class="card" id="new-trip-card" style="opacity:0.4;pointer-events:none;">
           <div class="card-title">New Trip</div>
           <div class="form-group">
             <label class="form-label">Store</label>
-            <select class="form-select" id="trip-store">
-              <option value="Walmart EL PASO #3763">Walmart EL PASO #3763</option>
-              <option value="Walmart EL PASO #2612">Walmart EL PASO #2612</option>
-              <option value="Walmart EL PASO #2201">Walmart EL PASO #2201</option>
-              <option value="Walmart EL PASO #512">Walmart EL PASO #512</option>
-              <option value="Walmart EL PASO #964">Walmart EL PASO #964</option>
-              <option value="Walmart EL PASO #6813">Walmart EL PASO #6813</option>
-              <option value="Walmart Horizon City #3136">Walmart Horizon City #3136</option>
-              <option value="Sam's Club #6502">Sam's Club #6502</option>
-              <option value="Sam's Club #8280">Sam's Club #8280</option>
-            </select>
+            <select class="form-select" id="trip-store"><option value="" disabled selected>Add stores in Settings first</option></select>
           </div>
           <div class="form-group">
             <label class="form-label">Trip Type</label>
@@ -815,6 +879,10 @@
                 🛒 Shopping
               </button>
             </div>
+          </div>
+          <div class="form-group" id="item-count-group" style="display:none;">
+            <label class="form-label">Number of Items</label>
+            <input class="form-input" type="number" id="trip-item-count" inputmode="numeric" placeholder="e.g. 24" step="1" min="1">
           </div>
           <div class="form-group">
             <label class="form-label">Number of Stops</label>
@@ -835,8 +903,9 @@
             Accept Trip
           </button>
         </div>
+        <div id="offline-hint" style="font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;padding:4px 0 8px;display:block;">Go Online to start accepting trips</div>
       </div>
- 
+
       <div id="active-trip-view" style="display:none">
         <div class="card">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
@@ -895,6 +964,10 @@
             <span class="stat-label">Stops</span>
             <span class="stat-value" id="detail-stops"></span>
           </div>
+          <div class="stat-row" id="detail-items-row" style="display:none;">
+            <span class="stat-label">Items</span>
+            <span class="stat-value" id="detail-items"></span>
+          </div>
           <div class="stat-row">
             <span class="stat-label">Started</span>
             <span class="stat-value" id="detail-started"></span>
@@ -907,75 +980,13 @@
         </button>
       </div>
     </div>
- 
-    <!-- EVALUATE VIEW -->
-    <div class="view" id="view-evaluate">
-      <div class="card">
-        <div class="card-title">Evaluate Offer</div>
-        <div class="form-group">
-          <label class="form-label">Trip Type</label>
-          <div class="toggle-group">
-            <button class="toggle-btn active-pickup" id="eval-type-pickup" onclick="setEvalType('Pickup')">📦 Pickup</button>
-            <button class="toggle-btn" id="eval-type-shopping" onclick="setEvalType('Shopping')">🛒 Shopping</button>
-          </div>
-        </div>
-        <div class="input-row">
-          <div class="form-group">
-            <label class="form-label">Pay ($)</label>
-            <input class="form-input" type="number" id="eval-pay" inputmode="decimal" placeholder="0.00" step="0.01" min="0" oninput="evaluateOffer()">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Miles</label>
-            <input class="form-input" type="number" id="eval-miles" inputmode="decimal" placeholder="0.0" step="0.1" min="0" oninput="evaluateOffer()">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Est. Time (minutes)</label>
-          <input class="form-input" type="number" id="eval-time" inputmode="numeric" placeholder="30" step="1" min="0" oninput="evaluateOffer()">
-        </div>
-      </div>
- 
-      <div id="eval-result" style="display:none">
-        <div class="rating-result" id="rating-box">
-          <div class="rating-score" id="rating-score">$0.00</div>
-          <div class="rating-label" id="rating-label">per mile</div>
-          <div class="rating-verdict" id="rating-verdict"></div>
-        </div>
- 
-        <div class="card" style="margin-top:12px;">
-          <div class="card-title">Breakdown</div>
-          <div class="stat-row">
-            <span class="stat-label">Raw Pay</span>
-            <span class="stat-value" id="bd-raw"></span>
-          </div>
-          <div class="stat-row" id="bd-deduct-row">
-            <span class="stat-label">Shopping Penalty</span>
-            <span class="stat-value" style="color:var(--red)" id="bd-deduct"></span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Effective Pay</span>
-            <span class="stat-value cyan" id="bd-effective"></span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">$/Mile</span>
-            <span class="stat-value" id="bd-permile"></span>
-          </div>
-          <div class="stat-row" id="bd-perhr-row">
-            <span class="stat-label">Est. $/hr</span>
-            <span class="stat-value" id="bd-perhr"></span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-label">Your Avg $/Trip</span>
-            <span class="stat-value" id="bd-avg"></span>
-          </div>
-        </div>
-      </div>
-    </div>
+
+    
  
     <!-- HISTORY VIEW -->
     <div class="view" id="view-history">
       <div id="history-stats" class="stats-grid" style="display:none"></div>
-      <div class="history-filters">
+      <div class="history-filters" id="history-filters">
         <button class="filter-chip active" onclick="filterHistory('all', this)">All</button>
         <button class="filter-chip" onclick="filterHistory('Pickup', this)">Pickup</button>
         <button class="filter-chip" onclick="filterHistory('Shopping', this)">Shopping</button>
@@ -986,8 +997,15 @@
  
     <!-- MILES VIEW -->
     <div class="view" id="view-miles">
+      <div class="history-filters" id="miles-filters">
+        <button class="filter-chip active" onclick="setMilesPeriod('today',this)">Today</button>
+        <button class="filter-chip" onclick="setMilesPeriod('week',this)">This Week</button>
+        <button class="filter-chip" onclick="setMilesPeriod('month',this)">This Month</button>
+        <button class="filter-chip" onclick="setMilesPeriod('year',this)">This Year</button>
+        <button class="filter-chip" onclick="setMilesPeriod('all',this)">All Time</button>
+      </div>
       <div class="card">
-        <div class="card-title">Total Miles Driven</div>
+        <div class="card-title" id="miles-period-label">Total Miles Driven</div>
         <div style="margin:8px 0 16px;">
           <span class="miles-big" id="miles-total">0</span>
           <span class="miles-unit">mi</span>
@@ -1071,12 +1089,27 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Export as JSON
         </button>
+        <button class="btn btn-ghost" id="notif-btn" onclick="requestNotifPermission()" style="margin-top:8px;margin-bottom:0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          Enable Notifications
+        </button>
         <button class="btn btn-danger" onclick="confirmClear()" style="margin-top:8px;margin-bottom:0;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
           Clear All Trip Data
         </button>
       </div>
  
+      <div class="card">
+        <div class="card-title">My Stores</div>
+        <div id="store-list-items">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text3);padding:8px 0;">No stores added yet. Add stores below.</div>
+        </div>
+        <div class="store-add-row">
+          <input class="form-input" type="text" id="store-name-input" placeholder="e.g. Walmart #3763" autocomplete="off">
+          <button class="store-add-btn" onclick="addStore()">+</button>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-title">Appearance</div>
         <div class="theme-grid" id="theme-grid">
@@ -1126,13 +1159,44 @@
         </div>
       </div>
 
-            <div class="card" style="text-align:center;">
+      <div class="card">
+        <div class="card-title">Contact</div>
+        <a class="contact-link" href="/cdn-cgi/l/email-protection#03696c6272766a6d676f6b43646e626a6f2d606c6e">
+          <div class="contact-link-icon" style="background:rgba(0,212,255,0.12);">✉️</div>
+          <div class="contact-link-body">
+            <div class="contact-link-title">Send a Message</div>
+            <div class="contact-link-sub"><span class="__cf_email__" data-cfemail="6a00050b1b1f03040e06022a0d070b030644090507">[email&#160;protected]</span></div>
+          </div>
+          <div class="contact-link-arrow">›</div>
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Support the Developer</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:12px;">If SparkTrack helps you earn more, consider buying me a coffee ☕</div>
+        <div class="donate-grid">
+          <a class="donate-btn" href="https://venmo.com/JoaquinDLH" target="_blank">
+            <span class="donate-btn-icon">💸</span>
+            <span class="donate-btn-label">Venmo</span>
+          </a>
+          <a class="donate-btn" href="https://paypal.me/TamalMoney" target="_blank">
+            <span class="donate-btn-icon">🅿️</span>
+            <span class="donate-btn-label">PayPal</span>
+          </a>
+          <a class="donate-btn" href="https://cash.app/$JoaquinDLH" target="_blank">
+            <span class="donate-btn-icon">💚</span>
+            <span class="donate-btn-label">Cash App</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="card" style="text-align:center;">
         <div class="card-title" style="text-align:center;">SparkTrack</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 · El Paso, TX</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text3);">PWA v1.0 · For Spark Drivers</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;">⚡ Built for Spark Drivers</div>
       </div>
     </div>
- 
+
   </div><!-- /content -->
  
   <!-- TAB BAR -->
@@ -1141,10 +1205,6 @@
       <div class="tab-dot" id="trip-dot"></div>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2L4.5 13.5H11L10 22L19.5 10H13L13 2Z"/></svg>
       Trip
-    </button>
-    <button class="tab" id="tab-evaluate" onclick="switchTab('evaluate')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-      Evaluate
     </button>
     <button class="tab" id="tab-history" onclick="switchTab('history')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -1206,6 +1266,29 @@
   </div>
 </div>
  
+
+<!-- TRIP DETAIL MODAL -->
+<div class="modal-overlay" id="trip-detail-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="td-title">Trip Details</div>
+    <div id="td-content"></div>
+    <button class="btn btn-ghost" onclick="closeTripDetail()" style="margin-top:8px;">Close</button>
+  </div>
+</div>
+
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal" style="padding:28px 22px 22px;">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="confirm-title">Are you sure?</div>
+    <div style="font-family:var(--mono);font-size:12px;color:var(--text2);text-align:center;margin-bottom:20px;" id="confirm-msg"></div>
+    <button class="btn btn-danger" id="confirm-yes-btn" onclick="confirmYes()">Yes, proceed</button>
+    <button class="btn btn-ghost" onclick="closeConfirm()" style="margin-top:8px;">Cancel</button>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
  
@@ -1223,13 +1306,14 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── STATE ──────────────────────────────────────────
 let activeTrip = null;
 let timerInterval = null;
+let onlineInterval = null;
 let currentTripType = 'Pickup';
-let currentEvalType = 'Pickup';
 let historyFilter = 'all';
+let milesPeriod = 'all';
  
 // ── STORAGE ────────────────────────────────────────
 function load(key, def) {
@@ -1240,6 +1324,12 @@ function save(key, val) {
 }
  
 function getTrips() { return load('st_trips', []); }
+function getOnlineSessions() { return load('st_sessions', []); }
+function saveOnlineSessions(s) { save('st_sessions', s); }
+function getActiveSession() { return load('st_active_session', null); }
+function saveActiveSession(s) { save('st_active_session', s); }
+function getStores() { return load('st_stores', []); }
+function saveStores(s) { save('st_stores', s); }
 function saveTrips(t) { save('st_trips', t); }
 function getSettings() { return load('st_settings', { mpg: '', gasPrice: '' }); }
 function getMilesLog() { return load('st_miles', []); }
@@ -1273,6 +1363,10 @@ window.addEventListener('DOMContentLoaded', () => {
   updateTripDot();
   updateExportBadge();
   loadTheme();
+  renderStoreList();
+  renderStoreDropdown();
+  restoreOnlineState();
+  updateNotifBtn();
   checkFirstLaunch();
 });
  
@@ -1290,12 +1384,19 @@ function switchTab(tab) {
 function setTripType(type) {
   currentTripType = type;
   updateToggleBtns('type-', type);
+  const itemGroup = document.getElementById('item-count-group');
+  if (itemGroup) itemGroup.style.display = type === 'Shopping' ? 'block' : 'none';
+  if (type !== 'Shopping') {
+    const el = document.getElementById('trip-item-count');
+    if (el) el.value = '';
+  }
 }
  
 function startTrip() {
   const store = document.getElementById('trip-store').value;
   const stops = parseInt(document.getElementById('trip-stops').value);
   const odoStart = parseFloat(document.getElementById('trip-odometer-start').value) || null;
+  const itemCount = currentTripType === 'Shopping' ? (parseInt(document.getElementById('trip-item-count').value) || null) : null;
   activeTrip = {
     id: Date.now().toString(),
     storeName: store,
@@ -1306,7 +1407,8 @@ function startTrip() {
     atStoreAt: null,
     deliveringAt: null,
     completedAt: null,
-    odometerStart: odoStart
+    odometerStart: odoStart,
+    itemCount
   };
   save('st_active', activeTrip);
   showActiveTrip();
@@ -1331,6 +1433,11 @@ function updateActiveTripUI() {
   document.getElementById('detail-store').textContent = shortStoreName(activeTrip.storeName);
   document.getElementById('detail-type').textContent = activeTrip.tripType;
   document.getElementById('detail-stops').textContent = activeTrip.stops;
+  const itemsRow = document.getElementById('detail-items-row');
+  if (itemsRow) {
+    itemsRow.style.display = (activeTrip.tripType === 'Shopping' && activeTrip.itemCount) ? 'flex' : 'none';
+    document.getElementById('detail-items').textContent = activeTrip.itemCount || '';
+  }
   document.getElementById('detail-started').textContent = fmtTime(activeTrip.acceptedAt);
  
   // Steps
@@ -1468,6 +1575,7 @@ function saveComplete() {
   updateTripDot();
  
   // Reset form
+  document.getElementById('trip-item-count').value = '';
   ['comp-base','comp-extra','comp-tip','comp-odometer-end','comp-notes'].forEach(id => {
     document.getElementById(id).value = '';
   });
@@ -1480,13 +1588,14 @@ function saveComplete() {
 }
  
 function cancelTrip() {
-  if (!confirm('Cancel this trip?')) return;
-  activeTrip = null;
-  save('st_active', null);
-  clearInterval(timerInterval);
-  setTripViewState(false);
-  updateTripDot();
-  showToast('Trip cancelled');
+  showConfirm('Cancel Trip?', 'All progress will be lost.', () => {
+    activeTrip = null;
+    save('st_active', null);
+    clearInterval(timerInterval);
+    setTripViewState(false);
+    updateTripDot();
+    showToast('Trip cancelled');
+  });
 }
  
 function startTimer() {
@@ -1513,65 +1622,6 @@ function updateTripDot() {
   dot.className = 'tab-dot' + (activeTrip ? ' show' : '');
 }
  
-// ── EVALUATE ───────────────────────────────────────
-function setEvalType(type) {
-  currentEvalType = type;
-  updateToggleBtns('eval-type-', type);
-  evaluateOffer();
-}
- 
-function evaluateOffer() {
-  const pay = parseFloat(document.getElementById('eval-pay').value);
-  const miles = parseFloat(document.getElementById('eval-miles').value);
-  const time = parseFloat(document.getElementById('eval-time').value);
- 
-  if (!pay || !miles) { document.getElementById('eval-result').style.display = 'none'; return; }
- 
-  const deduct = currentEvalType === 'Shopping' ? 3 : 0;
-  const effective = Math.max(0, pay - deduct);
-  const perMile = effective / miles;
-  const perHr = time > 0 ? (pay / (time / 60)) : null;
- 
-  // Rating
-  let color, label, verdict;
-  if (perMile < 1.0) { color = '#FF4444'; label = 'PASS'; verdict = 'Below $1.00/mi — not worth it'; }
-  else if (perMile < 1.5) { color = '#FFD600'; label = 'BORDERLINE'; verdict = 'Okay if you need the activity'; }
-  else if (perMile < 2.0) { color = '#00D4FF'; label = 'GOOD'; verdict = 'Solid offer — take it'; }
-  else { color = '#00E676'; label = 'TAKE IT'; verdict = 'Excellent offer — go!'; }
- 
-  document.getElementById('eval-result').style.display = 'block';
- 
-  const box = document.getElementById('rating-box');
-  box.style.background = color + '18';
-  box.style.borderColor = color + '44';
- 
-  document.getElementById('rating-score').style.color = color;
-  document.getElementById('rating-score').textContent = '$' + perMile.toFixed(2);
-  document.getElementById('rating-label').textContent = 'per mile · ' + label;
-  document.getElementById('rating-label').style.color = color;
-  document.getElementById('rating-verdict').textContent = verdict;
- 
-  document.getElementById('bd-raw').textContent = '$' + pay.toFixed(2);
-  const deductRow = document.getElementById('bd-deduct-row');
-  deductRow.style.display = deduct > 0 ? 'flex' : 'none';
-  document.getElementById('bd-deduct').textContent = '-$' + deduct.toFixed(2);
-  document.getElementById('bd-effective').textContent = '$' + effective.toFixed(2);
-  document.getElementById('bd-permile').textContent = '$' + perMile.toFixed(2) + '/mi';
- 
-  const phrRow = document.getElementById('bd-perhr-row');
-  if (perHr !== null) {
-    phrRow.style.display = 'flex';
-    document.getElementById('bd-perhr').textContent = '$' + perHr.toFixed(2) + '/hr';
-  } else {
-    phrRow.style.display = 'none';
-  }
- 
-  // Personal avg
-  const trips = getTrips().filter(t => t.totalEarnings);
-  const avg = trips.length ? trips.reduce((s, t) => s + t.totalEarnings, 0) / trips.length : null;
-  document.getElementById('bd-avg').textContent = avg ? '$' + avg.toFixed(2) : 'No data yet';
-}
- 
 // ── HISTORY ────────────────────────────────────────
 function filterHistory(f, el) {
   historyFilter = f;
@@ -1586,7 +1636,7 @@ function renderHistory() {
   // Stats
   if (trips.length) {
     const total = trips.reduce((s, t) => s + (t.totalEarnings || 0), 0);
-    const tipped = trips.filter(t => (t.tips || 0) > 0).length;
+    const avgTip = trips.reduce((s, t) => s + (t.tips || 0), 0) / trips.length;
     const avgPay = total / trips.length;
     const statsEl = document.getElementById('history-stats');
     statsEl.style.display = 'grid';
@@ -1594,7 +1644,7 @@ function renderHistory() {
       <div class="stat-card"><div class="stat-card-value" style="color:var(--green)">$${total.toFixed(0)}</div><div class="stat-card-label">Total Earned</div></div>
       <div class="stat-card"><div class="stat-card-value">${trips.length}</div><div class="stat-card-label">Total Trips</div></div>
       <div class="stat-card"><div class="stat-card-value" style="color:var(--cyan)">$${avgPay.toFixed(2)}</div><div class="stat-card-label">Avg per Trip</div></div>
-      <div class="stat-card"><div class="stat-card-value" style="color:var(--orange)">${Math.round(tipped/trips.length*100)}%</div><div class="stat-card-label">Tip Rate</div></div>
+      <div class="stat-card"><div class="stat-card-value" style="color:var(--orange)">$${avgTip.toFixed(2)}</div><div class="stat-card-label">Avg Tip</div></div>
     `;
   } else {
     document.getElementById('history-stats').style.display = 'none';
@@ -1615,13 +1665,15 @@ function renderHistory() {
     return;
   }
  
-  list.innerHTML = trips.map(t => {
+  list.innerHTML = trips.map((t, i) => {
+    const allTrips = getTrips();
+    const tripIdx = allTrips.findIndex(x => x.id === t.id);
     const icon = t.tripType === 'Shopping'
       ? `<div class="trip-item-icon" style="background:rgba(255,214,0,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#FFD600" stroke-width="1.8" width="20" height="20"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div>`
       : `<div class="trip-item-icon" style="background:rgba(0,212,255,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.8" width="20" height="20"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>`;
     const hasTip = (t.tips || 0) > 0;
     const meta = fmtDate(t.acceptedAt) + ' · ' + t.stops + (t.stops===1?' stop':' stops') + (hasTip ? ' · 💰 tipped' : '');
-    return `<div class="trip-item">
+    return `<div class="trip-item" onclick="showTripDetail('${t.id}')">
       ${icon}
       <div class="trip-item-body">
         <div class="trip-item-store">${shortStoreName(t.storeName)}</div>
@@ -1648,8 +1700,13 @@ function addMiles() {
 }
  
 function renderMiles() {
-  const log = getMilesLog();
+  const allLog = getMilesLog();
+  const periodStart = getPeriodBounds(milesPeriod);
+  const log = allLog.filter(e => e.date >= periodStart);
   const total = log.reduce((s, e) => s + e.miles, 0);
+  const labels = { today: 'Today', week: 'This Week', month: 'This Month', year: 'This Year', all: 'All Time' };
+  const labelEl = document.getElementById('miles-period-label');
+  if (labelEl) labelEl.textContent = (labels[milesPeriod] || 'All Time') + ' — Miles Driven';
   const s = getSettings();
  
   document.getElementById('miles-total').textContent = total.toFixed(1);
@@ -1658,7 +1715,7 @@ function renderMiles() {
   if (s.mpg && s.gasPrice) {
     const gallons = total / parseFloat(s.mpg);
     const cost = gallons * parseFloat(s.gasPrice);
-    const trips = getTrips();
+    const trips = getTrips().filter(t => t.completedAt && t.completedAt >= periodStart);
     const totalEarned = trips.reduce((sum, t) => sum + (t.totalEarnings || 0), 0);
     document.getElementById('gas-mpg').textContent = s.mpg + ' MPG';
     document.getElementById('gas-price-display').textContent = '$' + parseFloat(s.gasPrice).toFixed(2) + '/gal';
@@ -1685,10 +1742,11 @@ function renderMiles() {
 }
  
 function resetMiles() {
-  if (!confirm('Clear all miles logs?')) return;
-  saveMilesLog([]);
-  renderMiles();
-  showToast('Miles log cleared');
+  showConfirm('Reset Miles Log?', 'This will clear all logged miles. This cannot be undone.', () => {
+    saveMilesLog([]);
+    renderMiles();
+    showToast('Miles log cleared');
+  });
 }
  
 // ── SETTINGS ───────────────────────────────────────
@@ -1727,13 +1785,16 @@ function loadTheme() {
 
 function exportCSV() {
   const trips = getTrips();
+  // Also export online sessions as a second sheet comment block
+  const sessions = getOnlineSessions();
   if (!trips.length) { showToast('No trips to export'); return; }
-  const header = 'Date,Store,Type,Stops,Time Accepted,Time At Store,Time Delivering,Time Completed,Transit Time (min),Shop/Wait Time (min),Delivery Time (min),Elapsed Total (min),Base Pay,Extra,Tips,Total,Miles,Odo Start,Odo End,Gas Price,Gas Used (gal),Gas Cost,Notes';
+  const header = 'Date,Store,Type,Stops,Items,Time Accepted,Time At Store,Time Delivering,Time Completed,Transit Time (min),Shop/Wait Time (min),Delivery Time (min),Elapsed Total (min),Base Pay,Extra,Tips,Total,Miles,Odo Start,Odo End,Gas Price,Gas Used (gal),Gas Cost,Notes';
   const rows = trips.map(t => [
     fmtDate(t.acceptedAt),
     '"' + t.storeName + '"',
     t.tripType,
     t.stops,
+    t.itemCount || '',
     t.acceptedAt ? fmtTime(t.acceptedAt) : '',
     t.atStoreAt ? fmtTime(t.atStoreAt) : '',
     t.deliveringAt ? fmtTime(t.deliveringAt) : '',
@@ -1755,22 +1816,37 @@ function exportCSV() {
     '"' + (t.notes||'') + '"'
   ].join(','));
   const csv = [header, ...rows].join('\n');
-  triggerDownload(new Blob([csv], { type: 'text/csv' }), 'sparktrack.csv', 'Exported ' + trips.length + ' trips');
+  let fullCsv = csv;
+  if (sessions.length) {
+    const sHeader = 'Session Date,Start Time,End Time,Duration (min)';
+    const sRows = sessions.map(s => [
+      fmtDate(s.startedAt),
+      fmtTime(s.startedAt),
+      s.endedAt ? fmtTime(s.endedAt) : '',
+      s.durationSeconds ? Math.round(s.durationSeconds / 60) : ''
+    ].join(','));
+    fullCsv += '\n\nONLINE SESSIONS\n' + [sHeader, ...sRows].join('\n');
+  }
+  triggerDownload(new Blob([fullCsv], { type: 'text/csv' }), 'sparktrack.csv', 'Exported ' + trips.length + ' trips');
 }
  
 function exportJSON() {
   const trips = getTrips();
   if (!trips.length) { showToast('No trips to export'); return; }
-  triggerDownload(new Blob([JSON.stringify(trips, null, 2)], { type: 'application/json' }), 'sparktrack.json', 'Exported ' + trips.length + ' trips as JSON');
+  const sessions = getOnlineSessions();
+  const exportData = { trips, onlineSessions: sessions };
+  triggerDownload(new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' }), 'sparktrack.json', 'Exported ' + trips.length + ' trips as JSON');
 }
  
 function confirmClear() {
-  if (!confirm('Delete ALL trip data? This cannot be undone.')) return;
-  saveTrips([]);
-  setUnexported(0);
-  updateExportBadge();
-  renderHistory();
-  showToast('All data cleared');
+  showConfirm('Delete All Data?', 'This cannot be undone. All trips and sessions will be permanently deleted.', () => {
+    saveTrips([]);
+    saveOnlineSessions([]);
+    setUnexported(0);
+    updateExportBadge();
+    renderHistory();
+    showToast('All data cleared');
+  });
 }
  
 // ── HELPERS ────────────────────────────────────────
@@ -1788,7 +1864,11 @@ function fmtDate(ts) {
 }
 
 function shortStoreName(name) {
-  return name.replace('Walmart ', '').replace("Sam's Club ", "Sam's #");
+  if (!name) return '';
+  return name
+    .replace(/^Walmart Supercenter /i, 'Walmart ')
+    .replace(/^Walmart Neighborhood Market /i, 'Walmart NM ')
+    .replace(/^Sam's Club /i, "Sam's ");
 }
 
 function showToast(msg) {
@@ -1821,6 +1901,303 @@ function triggerDownload(blob, filename, toastMsg) {
   showToast(toastMsg);
 }
  
+
+
+// ── TRIP DETAIL POPUP ──────────────────────────────
+function showTripDetail(id) {
+  const trips = getTrips();
+  const t = trips.find(x => x.id === id);
+  if (!t) return;
+  document.getElementById('td-title').textContent = shortStoreName(t.storeName);
+  const rows = [
+    ['Date', fmtDate(t.acceptedAt)],
+    ['Store', t.storeName],
+    ['Type', t.tripType],
+    ['Stops', t.stops],
+    t.itemCount ? ['Items', t.itemCount] : null,
+    ['Time Accepted', t.acceptedAt ? fmtTime(t.acceptedAt) : '—'],
+    ['Time At Store', t.atStoreAt ? fmtTime(t.atStoreAt) : '—'],
+    ['Time Delivering', t.deliveringAt ? fmtTime(t.deliveringAt) : '—'],
+    ['Time Completed', t.completedAt ? fmtTime(t.completedAt) : '—'],
+    t.elapsedSeconds ? ['Total Time', Math.floor(t.elapsedSeconds/60) + ' min'] : null,
+    ['Base Pay', '$' + (t.basePay||0).toFixed(2)],
+    ['Extra', '$' + (t.extraEarnings||0).toFixed(2)],
+    ['Tip', '$' + (t.tips||0).toFixed(2)],
+    ['Total', '$' + (t.totalEarnings||0).toFixed(2)],
+    t.miles ? ['Miles Driven', t.miles.toFixed(1) + ' mi'] : null,
+    t.odometerStart ? ['Odo Start', t.odometerStart] : null,
+    t.odometerEnd ? ['Odo End', t.odometerEnd] : null,
+    t.gasPrice ? ['Gas Price', '$' + t.gasPrice.toFixed(2) + '/gal'] : null,
+    t.gasCost ? ['Gas Cost', '$' + t.gasCost.toFixed(2)] : null,
+    t.notes ? ['Notes', t.notes] : null,
+  ].filter(Boolean);
+  document.getElementById('td-content').innerHTML = rows.map(([l, v]) =>
+    '<div class="trip-detail-row"><span class="trip-detail-label">' + l + '</span><span class="trip-detail-value">' + v + '</span></div>'
+  ).join('');
+  document.getElementById('trip-detail-modal').classList.add('show');
+}
+
+function closeTripDetail() {
+  document.getElementById('trip-detail-modal').classList.remove('show');
+}
+
+// ── MILES PERIOD FILTER ─────────────────────────────
+function setMilesPeriod(period, el) {
+  milesPeriod = period;
+  document.querySelectorAll('#miles-filters .filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderMiles();
+}
+
+function getPeriodBounds(period) {
+  const now = new Date();
+  let start;
+  if (period === 'today') {
+    start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  } else if (period === 'week') {
+    const day = now.getDay(); // 0=Sun
+    start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - day).getTime();
+  } else if (period === 'month') {
+    start = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+  } else if (period === 'year') {
+    start = new Date(now.getFullYear(), 0, 1).getTime();
+  } else {
+    start = 0;
+  }
+  return start;
+}
+
+
+// ── CUSTOM CONFIRM (replaces confirm() for PWA compatibility) ───────────
+let confirmCallback = null;
+
+function showConfirm(title, msg, callback) {
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent = msg;
+  confirmCallback = callback;
+  document.getElementById('confirm-modal').classList.add('show');
+}
+
+function confirmYes() {
+  const cb = confirmCallback;
+  confirmCallback = null;
+  closeConfirm();
+  if (cb) cb();
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-modal').classList.remove('show');
+  confirmCallback = null;
+}
+
+
+// ── NOTIFICATIONS ──────────────────────────────────
+function updateNotifBtn() {
+  const btn = document.getElementById('notif-btn');
+  if (!btn) return;
+  if (!('Notification' in window)) {
+    btn.textContent = 'Notifications Not Supported';
+    btn.disabled = true;
+    return;
+  }
+  if (Notification.permission === 'granted') {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="20" height="20"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="1" y1="1" x2="23" y2="23" style="display:none"/></svg> Notifications Enabled';
+    btn.style.color = 'var(--green)';
+    btn.style.borderColor = 'rgba(0,230,118,0.4)';
+    btn.disabled = true;
+  } else if (Notification.permission === 'denied') {
+    btn.textContent = 'Notifications Blocked — Check Settings';
+    btn.disabled = true;
+  }
+}
+
+async function requestNotifPermission() {
+  if (!('Notification' in window)) {
+    showToast('Notifications not supported on this device');
+    return;
+  }
+  if (Notification.permission === 'granted') {
+    showToast('Notifications already enabled');
+    return;
+  }
+  const result = await Notification.requestPermission();
+  if (result === 'granted') {
+    showToast('Notifications enabled ✓');
+    updateNotifBtn();
+    // Send a test notification
+    new Notification('SparkTrack', {
+      body: 'Notifications are enabled. You will be reminded when you go online.',
+      icon: '/favicon.ico'
+    });
+  } else {
+    showToast('Notifications blocked. Enable in Settings > SparkTrack');
+    updateNotifBtn();
+  }
+}
+
+function sendOnlineNotification() {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  new Notification('SparkTrack — Online', {
+    body: 'Your session is active. Tap here when you are ready to log a trip.',
+    tag: 'sparktrack-online',
+    renotify: false,
+    requireInteraction: true
+  });
+}
+
+function sendOfflineNotification(durationSeconds) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  const h = Math.floor(durationSeconds / 3600);
+  const m = Math.floor((durationSeconds % 3600) / 60);
+  const timeStr = h > 0 ? h + 'h ' + m + 'm' : m + 'm';
+  new Notification('SparkTrack — Session Ended', {
+    body: 'You were online for ' + timeStr + '. Tap to log your trips and export your data.',
+    tag: 'sparktrack-online',
+    renotify: true,
+    requireInteraction: true
+  });
+}
+
+// ── ONLINE TRACKING ────────────────────────────────
+function toggleOnline() {
+  if (getActiveSession()) goOffline();
+  else goOnline();
+}
+
+function goOnline() {
+  const session = { id: Date.now().toString(), startedAt: Date.now(), endedAt: null, durationSeconds: null };
+  saveActiveSession(session);
+  updateOnlineUI(true);
+  startOnlineTimer();
+  showToast('You are now Online ✅');
+  sendOnlineNotification();
+}
+
+function goOffline() {
+  const session = getActiveSession();
+  if (!session) return;
+  session.endedAt = Date.now();
+  session.durationSeconds = Math.floor((session.endedAt - session.startedAt) / 1000);
+  const sessions = getOnlineSessions();
+  sessions.unshift(session);
+  saveOnlineSessions(sessions);
+  saveActiveSession(null);
+  clearInterval(onlineInterval);
+  updateOnlineUI(false);
+  const h = Math.floor(session.durationSeconds / 3600);
+  const m = Math.floor((session.durationSeconds % 3600) / 60);
+  sendOfflineNotification(session.durationSeconds);
+  showToast('Offline — ' + (h > 0 ? h + 'h ' : '') + m + 'm online');
+}
+
+function restoreOnlineState() {
+  const session = getActiveSession();
+  if (session) {
+    updateOnlineUI(true);
+    startOnlineTimer();
+  }
+}
+
+function startOnlineTimer() {
+  clearInterval(onlineInterval);
+  updateOnlineTimerDisplay();
+  onlineInterval = setInterval(updateOnlineTimerDisplay, 1000);
+}
+
+function updateOnlineTimerDisplay() {
+  const session = getActiveSession();
+  if (!session) return;
+  const elapsed = Math.floor((Date.now() - session.startedAt) / 1000);
+  const h = Math.floor(elapsed / 3600);
+  const m = Math.floor((elapsed % 3600) / 60);
+  const s = elapsed % 60;
+  const str = h > 0 ? h + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0') : m + ':' + String(s).padStart(2,'0');
+  const banner = document.getElementById('online-banner-timer');
+  const display = document.getElementById('online-timer-display');
+  if (banner) banner.textContent = str;
+  if (display) display.textContent = str;
+}
+
+function updateOnlineUI(isOnline) {
+  const titleEl = document.getElementById('banner-title');
+  const indicatorEl = document.getElementById('banner-indicator');
+  const timerEl = document.getElementById('online-banner-timer');
+  const btnEl = document.getElementById('banner-btn');
+  if (titleEl) titleEl.textContent = isOnline ? 'Go Offline' : 'Go Online';
+  if (indicatorEl) {
+    indicatorEl.style.background = isOnline ? 'var(--green)' : 'var(--text3)';
+    indicatorEl.style.boxShadow = isOnline ? '0 0 6px var(--green)' : 'none';
+    indicatorEl.style.animation = isOnline ? '' : 'none';
+  }
+  if (timerEl) timerEl.style.display = isOnline ? 'inline' : 'none';
+  if (btnEl) btnEl.className = 'header-online-btn' + (isOnline ? ' is-online' : '');
+  // New trip card
+  const card = document.getElementById('new-trip-card');
+  const hint = document.getElementById('offline-hint');
+  if (card) { card.style.opacity = isOnline ? '1' : '0.4'; card.style.pointerEvents = isOnline ? 'all' : 'none'; }
+  if (hint) hint.style.display = isOnline ? 'none' : 'block';
+}
+
+// ── STORES ─────────────────────────────────────────
+function addStore() {
+  const input = document.getElementById('store-name-input');
+  const name = input.value.trim();
+  if (!name) { showToast('Enter a store name'); return; }
+  const stores = getStores();
+  if (stores.includes(name)) { showToast('Store already added'); return; }
+  stores.push(name);
+  saveStores(stores);
+  input.value = '';
+  renderStoreList();
+  renderStoreDropdown();
+  showToast('Store added');
+}
+
+function removeStore(idx) {
+  const stores = getStores();
+  stores.splice(idx, 1);
+  saveStores(stores);
+  renderStoreList();
+  renderStoreDropdown();
+  showToast('Store removed');
+}
+
+function renderStoreList() {
+  const stores = getStores();
+  const el = document.getElementById('store-list-items');
+  if (!el) return;
+  if (!stores.length) {
+    el.innerHTML = '<div style="font-family:var(--mono);font-size:11px;color:var(--text3);padding:8px 0;">No stores added yet. Add stores below.</div>';
+    return;
+  }
+  el.innerHTML = stores.map((s, i) =>
+    '<div class="store-list-item">' +
+    '<span class="store-list-name">' + s + '</span>' +
+    '<button class="store-remove-btn" onclick="removeStore(' + i + ')">&#x2715;</button>' +
+    '</div>'
+  ).join('');
+}
+
+function renderStoreDropdown() {
+  const stores = getStores();
+  const sel = document.getElementById('trip-store');
+  if (!sel) return;
+  const current = sel.value;
+  sel.innerHTML = stores.length
+    ? stores.map(s => '<option value="' + s + '">' + s + '</option>').join('')
+    : '<option value="" disabled selected>Add stores in Settings first</option>';
+  if (stores.includes(current)) sel.value = current;
+}
+
+function checkFirstLaunch() {
+  if (!load('st_toured', false)) setTimeout(startTour, 600);
+}
+
+function resetTour() {
+  save('st_toured', false);
+  startTour();
+}
+
 // ── PWA MANIFEST (inline) ──────────────────────────
 const manifest = {
   name: 'SparkTrack',
@@ -1866,12 +2243,6 @@ const TOUR_STEPS = [
     desc: "Start here when you accept an offer. Select your store, trip type, and odometer reading, then tap Accept Trip. Tap the action button as you move through each phase - At Store, Delivering, and Complete."
   },
   {
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
-    iconBg: "rgba(0,212,255,0.12)",
-    title: "Evaluate Tab",
-    desc: "Not sure if an offer is worth it? Enter the pay and miles before accepting. SparkTrack scores it instantly - under $1.00/mi is a pass, $2.00+ is a no-brainer. Shopping orders get a $3 time penalty applied automatically."
-  },
-  {
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
     iconBg: "rgba(0,212,255,0.12)",
     title: "History Tab",
@@ -1906,7 +2277,7 @@ function startTour() {
 }
 
 // step index -> tab id (null = no tab highlighted)
-const TOUR_TAB_MAP = [null, 'trip', 'evaluate', 'history', 'miles', 'settings', null];
+const TOUR_TAB_MAP = [null, 'trip', 'history', 'miles', 'settings', null];
 
 function highlightTourTab(tabId) {
   // Remove highlight from all tabs first
@@ -1944,10 +2315,6 @@ function endTour() {
   document.getElementById('tour-overlay').classList.remove('show');
   highlightTourTab(null);
   save('st_toured', true);
-}
-
-function checkFirstLaunch() {
-  if (!load('st_toured', false)) setTimeout(startTour, 600);
 }
 
 </script>
